@@ -14,7 +14,8 @@ var dirs = {
 var files = {
   src: path.join(dirs.src, '**', '*.ts'),
   test: path.join(dirs.test, '**', '*.ts'),
-  typings: path.join(dirs.typings, '**', '*.d.ts')
+  typings: path.join(dirs.typings, '**', '*.d.ts'),
+  ts: path.join(__dirname, '{src,test}', '**', '*.ts')
 };
 
 var project = typescript.createProject({
@@ -34,7 +35,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('scripts', function() {
-  var ts = gulp.src([files.src, files.test, files.typings])
+  var ts = gulp.src([files.ts, files.typings])
     .pipe(typescript(project));
   return ts.js.pipe(gulp.dest(dirs.build));
 });
