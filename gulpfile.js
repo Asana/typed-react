@@ -13,10 +13,9 @@ var dirs = {
 };
 
 var files = {
-  src: path.join(dirs.src, '**', '*.ts'),
-  test: path.join(dirs.test, '**', '*.ts'),
   typings: path.join(dirs.typings, '**', '*.d.ts'),
-  ts: path.join(__dirname, '{src,test}', '**', '*.ts')
+  ts: path.join(__dirname, '{src,test}', '**', '*.ts'),
+  spec: path.join(dirs.build, 'test', '**', '*.js')
 };
 
 var project = typescript.createProject({
@@ -30,7 +29,7 @@ var project = typescript.createProject({
 });
 
 gulp.task('lint', function() {
-  return gulp.src([files.src, files.test])
+  return gulp.src(files.ts)
     .pipe(tslint())
     .pipe(tslint.report('prose'));
 });
@@ -42,7 +41,7 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('spec', ['scripts'], function() {
-  gulp.src(files.test)
+  gulp.src(files.spec)
     .pipe(mocha({
       reporter: 'spec'
     }));
