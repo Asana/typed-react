@@ -1,7 +1,7 @@
 import NotImplementedError = require("./not_implemented_error");
 import React = require("react");
 
-class Component<P, S> implements React.Component<P, S> {
+class Component<P, S> implements React.Specification<P, S>, React.Component<P, S> {
     public refs: {
         [key: string]: React.DomReferencer
     };
@@ -38,6 +38,10 @@ class Component<P, S> implements React.Component<P, S> {
 
     replaceProps(nextProps: P, callback?: () => void): void {
         throw new NotImplementedError("replaceProps");
+    }
+
+    render(): React.Descriptor<P> {
+        return null;
     }
 }
 
