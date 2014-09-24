@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/Asana/typed-react/issues"
   },
-  "homepage": "https://github.com/Asana/typed-react"
+  "homepage": "https://github.com/Asana/typed-react",
+  "devDependencies": {
+    "gulp": "^3.8.8"
+  }
 }
