@@ -40,5 +40,5 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('test', function(callback) {
-  return runSequence('lint', callback);
+  return runSequence('lint', 'scripts', callback);
 });
