@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Asana/typed-react",
   "devDependencies": {
-    "gulp": "^3.8.8"
+    "gulp": "^3.8.8",
+    "run-sequence": "^0.3.7"
   }
 }
