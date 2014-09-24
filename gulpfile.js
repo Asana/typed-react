@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var mocha = require('gulp-mocha');
 var path = require('path');
 var runSequence = require('run-sequence');
 var tslint = require('gulp-tslint');
@@ -40,6 +41,13 @@ gulp.task('scripts', function() {
   return ts.js.pipe(gulp.dest(dirs.build));
 });
 
+gulp.task('spec', ['scripts'], function() {
+  gulp.src(files.test)
+    .pipe(mocha({
+      reporter: 'spec'
+    }));
+});
+
 gulp.task('test', function(callback) {
-  return runSequence('lint', 'scripts', callback);
+  return runSequence('lint', 'spec', callback);
 });
