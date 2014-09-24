@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var path = require('path');
+var runSequence = require('run-sequence');
 var tslint = require('gulp-tslint');
 
 var dirs = {
@@ -16,4 +17,8 @@ gulp.task('lint', function() {
   return gulp.src([files.src, files.test])
     .pipe(tslint())
     .pipe(tslint.report('prose'));
+});
+
+gulp.task('test', function(callback) {
+  return runSequence('lint', callback);
 });
