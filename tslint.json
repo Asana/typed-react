@@ -7,7 +7,10 @@
     "curly": true,
     "eofline": true,
     "forin": true,
-    "indent": true,
+    "indent": [
+      true,
+      4
+    ],
     "jsdoc-format": true,
     "label-position": true,
     "label-undefined": true,
