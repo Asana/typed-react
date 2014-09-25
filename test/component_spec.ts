@@ -1,5 +1,5 @@
-/// <reference path="../typings/mocha/mocha.d.ts" />
-import chai = require("chai");
+/// <reference path="../typings/jest/jest.d.ts" />
+jest.autoMockOff();
 import Component = require("../src/component");
 import NotImplementedError = require("../src/not_implemented_error");
 
@@ -11,20 +11,21 @@ describe("Component", () => {
     });
 
     it("should not have refs", () => {
-        chai.expect(component).to.not.have.property("refs");
+        expect(component.refs).toBeUndefined();
     });
 
     it("should not have props", () => {
-        chai.expect(component).to.not.have.property("props");
+        expect(component.props).toBeUndefined();
     });
 
     it("should not have state", () => {
-        chai.expect(component).to.not.have.property("state");
+        expect(component.state).toBeUndefined();
     });
 
     var testNotImplemented = (methodName: string, fn: () => void): void => {
         it("should throw for " + methodName, () => {
-            chai.expect(fn).to.throw(NotImplementedError, methodName);
+            var err = new NotImplementedError(methodName);
+            expect(fn).toThrow(err);
         });
     };
 
@@ -61,6 +62,6 @@ describe("Component", () => {
     });
 
     it("should return null from render", () => {
-        chai.expect(component.render()).to.be.null;
+        expect(component.render()).toBeNull();
     });
 });

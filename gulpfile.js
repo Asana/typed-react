@@ -1,6 +1,7 @@
 var gulp = require('gulp');
-var mocha = require('gulp-mocha');
+var jest = require('gulp-jest');
 var path = require('path');
+var rimraf = require('rimraf');
 var runSequence = require('run-sequence');
 var tslint = require('gulp-tslint');
 var typescript = require('gulp-typescript');
@@ -28,22 +29,26 @@ var project = typescript.createProject({
   noExternalResolve: true
 });
 
+gulp.task('clean', function(callback) {
+  rimraf(dirs.build, callback);
+});
+
 gulp.task('lint', function() {
   return gulp.src(files.ts)
     .pipe(tslint())
     .pipe(tslint.report('prose'));
 });
 
-gulp.task('scripts', function() {
+gulp.task('scripts', ['clean'], function() {
   var ts = gulp.src([files.ts, files.typings])
     .pipe(typescript(project));
   return ts.js.pipe(gulp.dest(dirs.build));
 });
 
 gulp.task('spec', ['scripts'], function() {
-  gulp.src(files.spec)
-    .pipe(mocha({
-      reporter: 'spec'
+  return gulp.src(dirs.build)
+    .pipe(jest({
+      testDirectoryName: 'test'
     }));
 });
 

@@ -1,5 +1,5 @@
-/// <reference path="../typings/mocha/mocha.d.ts" />
-import chai = require("chai");
+/// <reference path="../typings/jest/jest.d.ts" />
+jest.autoMockOff();
 import NotImplementedError = require("../src/not_implemented_error");
 
 describe("NotImplementedError", () => {
@@ -11,10 +11,10 @@ describe("NotImplementedError", () => {
     });
 
     it("should have a name", () => {
-        chai.expect(err).to.have.property("name", "NotImplementedError");
+        expect(err.name).toEqual("NotImplementedError");
     });
 
     it("should have a message", () => {
-        chai.expect(err).to.have.property("message", methodName + " should be implemented by React");
+        expect(err.message).toEqual(methodName + " should be implemented by React");
     });
 });
