@@ -40,7 +40,7 @@ class Component<P, S> implements React.Specification<P, S>, React.Component<P, S
         throw new NotImplementedError("replaceProps");
     }
 
-    render(): React.Descriptor<P> {
+    render(): React.Descriptor<any> {
         return null;
     }
 }
