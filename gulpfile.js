@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var mocha = require('gulp-mocha');
+var jest = require('gulp-jest');
 var path = require('path');
 var rimraf = require('rimraf');
 var runSequence = require('run-sequence');
@@ -46,9 +46,9 @@ gulp.task('scripts', ['clean'], function() {
 });
 
 gulp.task('spec', ['scripts'], function() {
-  gulp.src(files.spec)
-    .pipe(mocha({
-      reporter: 'spec'
+  return gulp.src(dirs.build)
+    .pipe(jest({
+      testDirectoryName: 'test'
     }));
 });
 
