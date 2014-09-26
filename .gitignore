@@ -32,5 +32,3 @@ node_modules
 .idea
 *.iml
 
-# Typings
-typings
