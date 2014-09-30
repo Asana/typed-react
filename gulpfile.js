@@ -1,7 +1,7 @@
 var childProcess = require('child_process');
 var glob = require('glob');
 var gulp = require('gulp');
-var jest = require('gulp-jest');
+var jest = require('jest-cli');
 var path = require('path');
 var rimraf = require('rimraf');
 var runSequence = require('run-sequence');
@@ -65,11 +65,15 @@ gulp.task('scripts', ['clean'], function() {
   return ts.js.pipe(gulp.dest(dirs.build));
 });
 
-gulp.task('spec', ['scripts'], function() {
-  return gulp.src(dirs.build)
-    .pipe(jest({
+gulp.task('spec', ['scripts'], function(callback) {
+  jest.runCLI({
+    config: {
+      rootDir: __dirname,
       testDirectoryName: 'test'
-    }));
+    }
+  }, function(success) {
+    callback(success ? null : success);
+  });
 });
 
 gulp.task('test', function(callback) {
