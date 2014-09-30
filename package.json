@@ -4,7 +4,8 @@
   "description": "A binding layer between React and TypeScript",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/gulp test"
+    "test": "node_modules/.bin/gulp test",
+    "postinstall": "node_modules/.bin/gulp scripts"
   },
   "repository": {
     "type": "git",

@@ -1,13 +1,13 @@
 /// <reference path="../typings/jest/jest.d.ts" />
 jest.autoMockOff();
-import NotImplementedError = require("../src/not_implemented_error");
+import TypedReact = require("../src/index");
 
 describe("NotImplementedError", () => {
-    var err: NotImplementedError;
+    var err: TypedReact.NotImplementedError;
     var methodName = "chai";
 
     beforeEach(() => {
-        err = new NotImplementedError(methodName);
+        err = new TypedReact.NotImplementedError(methodName);
     });
 
     it("should have a name", () => {

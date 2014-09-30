@@ -1,7 +1,6 @@
 /// <reference path="../typings/jest/jest.d.ts" />
 jest.autoMockOff();
-import createFactory = require("../src/create_factory");
-import Component = require("../src/component");
+import TypedReact = require("../src/index");
 import React = require("react");
 
 interface FactoryProps {
@@ -11,7 +10,7 @@ interface FactoryProps {
 interface FactoryState {
 }
 
-class FactoryTest extends Component<FactoryProps, FactoryState> {
+class FactoryTest extends TypedReact.Component<FactoryProps, FactoryState> {
     render() {
         return React.DOM.h1(null, "Greetings", name);
     }
@@ -23,7 +22,7 @@ describe("createFactory", () => {
     var name = "jest";
 
     beforeEach(() => {
-        factory = createFactory(FactoryTest);
+        factory = TypedReact.createFactory(FactoryTest);
         descriptor = factory({
             name: name
         });
