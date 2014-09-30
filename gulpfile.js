@@ -1,9 +1,9 @@
 var childProcess = require('child_process');
+var del = require('del');
 var glob = require('glob');
 var gulp = require('gulp');
 var jest = require('jest-cli');
 var path = require('path');
-var rimraf = require('rimraf');
 var runSequence = require('run-sequence');
 var tslint = require('gulp-tslint');
 var typescript = require('gulp-typescript');
@@ -17,12 +17,18 @@ var dirs = {
 
 var files = {
   typings: path.join(dirs.typings, '**', '*.d.ts'),
+  build: path.join(dirs.build, 'src', '**', '*.{d.ts,js}'),
   ts: path.join(__dirname, '{src,test}', '**', '*.ts'),
   spec: path.join(dirs.build, 'test', '**', '*.js')
 };
 
 gulp.task('clean', function(callback) {
-  rimraf(dirs.build, callback);
+  del([dirs.build, 'index.js', 'index.d.ts'], callback);
+});
+
+gulp.task('copy', ['scripts'], function() {
+  gulp.src(files.build)
+    .pipe(gulp.dest(__dirname));
 });
 
 gulp.task('format', function(callback) {
@@ -74,6 +80,8 @@ gulp.task('spec', ['scripts'], function(callback) {
     callback(success ? null : success);
   });
 });
+
+gulp.task('build', ['copy']);
 
 gulp.task('test', function(callback) {
   return runSequence('lint', 'spec', callback);

@@ -32,3 +32,6 @@ node_modules
 .idea
 *.iml
 
+# Build artifacts
+index.js
+index.d.ts
