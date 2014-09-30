@@ -1,3 +1,5 @@
+var childProcess = require('child_process');
+var glob = require('glob');
 var gulp = require('gulp');
 var jest = require('gulp-jest');
 var path = require('path');
@@ -31,6 +33,24 @@ var project = typescript.createProject({
 
 gulp.task('clean', function(callback) {
   rimraf(dirs.build, callback);
+});
+
+gulp.task('format', function(callback) {
+  glob(files.ts, function(err, files) {
+    if (err) {
+      return callback(err);
+    }
+    if (files.length === 0) {
+      return callback(null);
+    }
+    var command = [
+      'node_modules/.bin/tsfmt',
+      '--replace',
+      '--no-editorconfig',
+      '--no-tsfmt'
+    ].concat(files).join(' ');
+    childProcess.exec(command, callback);
+  });
 });
 
 gulp.task('lint', function() {
