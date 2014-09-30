@@ -1,7 +1,7 @@
 import Component = require("./component");
 import React = require("react");
 
-function createFactory<P, S>(component: {new(): Component<P, S>}, mixins: React.Mixin<P, S>[] = []): React.Factory<P> {
+function createFactory<P, S>(component: { new (): Component<P, S> }, mixins: React.Mixin<P, S>[]= []): React.Factory<P> {
     var displayName = component.prototype.constructor.name;
     // Do not override React
     delete component.prototype.constructor;
