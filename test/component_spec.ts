@@ -1,13 +1,12 @@
 /// <reference path="../typings/jest/jest.d.ts" />
 jest.autoMockOff();
-import Component = require("../src/component");
-import NotImplementedError = require("../src/not_implemented_error");
+import TypedReact = require("../src/index");
 
 describe("Component", () => {
-    var component: Component<any, any>;
+    var component: TypedReact.Component<any, any>;
 
     beforeEach(() => {
-        component = new Component<any, any>();
+        component = new TypedReact.Component<any, any>();
     });
 
     it("should not have refs", () => {
@@ -24,7 +23,7 @@ describe("Component", () => {
 
     var testNotImplemented = (methodName: string, fn: () => void): void => {
         it("should throw for " + methodName, () => {
-            var err = new NotImplementedError(methodName);
+            var err = new TypedReact.NotImplementedError(methodName);
             expect(fn).toThrow(err);
         });
     };

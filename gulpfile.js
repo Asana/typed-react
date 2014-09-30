@@ -21,16 +21,6 @@ var files = {
   spec: path.join(dirs.build, 'test', '**', '*.js')
 };
 
-var project = typescript.createProject({
-  removeComments: false,
-  noImplicitAny: true,
-  noLib: false,
-  target: 'ES5',
-  module: 'commonjs',
-  declarationFiles: true,
-  noExternalResolve: true
-});
-
 gulp.task('clean', function(callback) {
   rimraf(dirs.build, callback);
 });
@@ -61,7 +51,16 @@ gulp.task('lint', function() {
 
 gulp.task('scripts', ['clean'], function() {
   var ts = gulp.src([files.ts, files.typings])
-    .pipe(typescript(project));
+    .pipe(typescript({
+      removeComments: false,
+      noImplicitAny: true,
+      noLib: false,
+      target: 'ES5',
+      module: 'commonjs',
+      declarationFiles: true,
+      noExternalResolve: true
+    }));
+  ts.dts.pipe(gulp.dest(dirs.build));
   return ts.js.pipe(gulp.dest(dirs.build));
 });
 

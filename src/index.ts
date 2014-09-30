@@ -1,7 +1,15 @@
-import NotImplementedError = require("./not_implemented_error");
 import React = require("react");
 
-class Component<P, S> implements React.Specification<P, S>, React.Component<P, S> {
+export class NotImplementedError implements Error {
+    public name = "NotImplementedError";
+    public message: string;
+
+    constructor(methodName: string) {
+        this.message = methodName + " should be implemented by React";
+    }
+}
+
+export class Component<P, S> implements React.Specification<P, S>, React.Component<P, S> {
     public refs: {
         [key: string]: React.DomReferencer
     };
@@ -45,4 +53,20 @@ class Component<P, S> implements React.Specification<P, S>, React.Component<P, S
     }
 }
 
-export = Component;
+export function createFactory<P, S>(component: { new (): Component<P, S> }, mixins: React.Mixin<P, S>[]= []): React.Factory<P> {
+    var displayName = component.prototype.constructor.name;
+    // Do not override React
+    delete component.prototype.constructor;
+    delete component.prototype.getDomNode;
+    delete component.prototype.setState;
+    delete component.prototype.replaceState;
+    delete component.prototype.forceUpdate;
+    delete component.prototype.isMounted;
+    delete component.prototype.transferPropsTo;
+    delete component.prototype.setProps;
+    delete component.prototype.replaceProps;
+    var spec: React.Specification<P, S> = component.prototype;
+    spec.displayName = displayName;
+    spec.mixins = mixins;
+    return React.createClass(spec);
+}
