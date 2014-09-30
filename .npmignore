@@ -6,4 +6,4 @@ gulpfile.js
 .travis.yml
 tsd.json
 tslint.json
-
+*.iml

@@ -4,8 +4,7 @@
   "description": "A binding layer between React and TypeScript",
   "main": "build/src/index.js",
   "scripts": {
-    "test": "node_modules/.bin/gulp test",
-    "prepublish": "node_modules/.bin/gulp scripts"
+    "test": "node_modules/.bin/gulp test"
   },
   "repository": {
     "type": "git",
@@ -33,5 +32,8 @@
   },
   "dependencies": {
     "react": "^0.11.2"
+  },
+  "directories": {
+    "lib": "build/src"
   }
 }
