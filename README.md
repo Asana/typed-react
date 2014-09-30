@@ -5,7 +5,7 @@ A binding layer between React and TypeScript. React currently uses a `createClas
 ## Installation
 
 ```sh
-$> npm install typed-react --save
+npm install typed-react --save
 ```
 
 ## Example
