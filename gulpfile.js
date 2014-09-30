@@ -19,11 +19,13 @@ var files = {
   typings: path.join(dirs.typings, '**', '*.d.ts'),
   build: path.join(dirs.build, 'src', '**', '*.{d.ts,js}'),
   ts: path.join(__dirname, '{src,test}', '**', '*.ts'),
-  spec: path.join(dirs.build, 'test', '**', '*.js')
+  spec: path.join(dirs.build, 'test', '**', '*.js'),
+  main: path.join(__dirname, 'index.js'),
+  dts: path.join(__dirname, 'index.d.ts')
 };
 
 gulp.task('clean', function(callback) {
-  del([dirs.build, 'index.js', 'index.d.ts'], callback);
+  del([dirs.build, files.main, files.dts], callback);
 });
 
 gulp.task('copy', ['scripts'], function() {

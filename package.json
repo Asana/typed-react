@@ -1,8 +1,8 @@
 {
   "name": "typed-react",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "A binding layer between React and TypeScript",
-  "main": "build/src/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "node_modules/.bin/gulp test"
   },
@@ -32,8 +32,5 @@
   },
   "dependencies": {
     "react": "^0.11.2"
-  },
-  "directories": {
-    "lib": "./build/src"
   }
 }
