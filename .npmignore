@@ -1,0 +1,9 @@
+build/test
+src
+test
+typings
+gulpfile.js
+.travis.yml
+tsd.json
+tslint.json
+

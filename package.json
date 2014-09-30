@@ -2,10 +2,10 @@
   "name": "typed-react",
   "version": "0.0.1",
   "description": "A binding layer between React and TypeScript",
-  "main": "index.js",
+  "main": "build/src/index.js",
   "scripts": {
     "test": "node_modules/.bin/gulp test",
-    "postinstall": "node_modules/.bin/gulp scripts"
+    "prepublish": "node_modules/.bin/gulp scripts"
   },
   "repository": {
     "type": "git",
