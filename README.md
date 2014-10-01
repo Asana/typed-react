@@ -33,7 +33,7 @@ class Timer extends TypedReact.Component<TimerProps, TimerState> {
 
     tick() {
         this.setState({
-            tickElapsed: this.state.tickElapsed + 1
+            ticksElapsed: this.state.ticksElapsed + 1
         });
     }
 
