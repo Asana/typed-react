@@ -6,7 +6,13 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "react/react.d.ts": {
-      "commit": "b2171552576bc574b97a9fd2ae5f037172049d7b"
+      "commit": "b6970132c4ddf4b0ffe7952e9e3b08e23f96ea8f"
+    },
+    "mocha/mocha.d.ts": {
+      "commit": "b6970132c4ddf4b0ffe7952e9e3b08e23f96ea8f"
+    },
+    "chai/chai.d.ts": {
+      "commit": "b6970132c4ddf4b0ffe7952e9e3b08e23f96ea8f"
     }
   }
 }

@@ -1,7 +1,9 @@
-/// <reference path="../typings/jest/jest.d.ts" />
-jest.autoMockOff();
+/// <reference path="../typings/mocha/mocha.d.ts" />
+import chai = require("chai");
 import TypedReact = require("../src/index");
 import React = require("react");
+
+var expect = chai.expect;
 
 interface FactoryProps {
     name: string;
@@ -29,11 +31,11 @@ describe("createFactory", () => {
     });
 
     it("should be a factory", () => {
-        expect(React.isValidClass(factory)).toBeTruthy();
+        expect(React.isValidClass(factory)).to.be.true;
     });
 
     it("should produce a valid descriptor", () => {
-        expect(React.isValidComponent(descriptor)).toBeTruthy();
-        expect(descriptor.props.name).toEqual(name);
+        expect(React.isValidComponent(descriptor)).to.be.true;
+        expect(descriptor.props.name).to.equal(name);
     });
 });
