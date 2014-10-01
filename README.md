@@ -2,6 +2,12 @@
 
 A binding layer between React and TypeScript. React currently uses a `createClass` function which takes in a component specification and then binds the value of `this`. Unfortunately TypeScript does not support that currently but there are several proposals to do that in the future. React moving to a world which supports ES6 classes will also make this unnecessary. In the meantime, this library quite simple provides a class to extend and factory function to convert the prototype for `createClass`.
 
+## Installation
+
+```sh
+npm install typed-react --save
+```
+
 ## Example
 
 ```ts
@@ -27,7 +33,7 @@ class Timer extends TypedReact.Component<TimerProps, TimerState> {
 
     tick() {
         this.setState({
-            tickElapsed: this.state.tickElapsed + 1
+            ticksElapsed: this.state.ticksElapsed + 1
         });
     }
 
