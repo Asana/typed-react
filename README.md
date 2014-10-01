@@ -50,14 +50,76 @@ class Timer extends TypedReact.Component<TimerProps, TimerState> {
     }
 }
 
-export var factory = TypedReact.createFactory(Timer);
+export var factory = TypedReact.createFactory(React, Timer);
 ```
 
 In this case we export the Props and the Factory but we could make the props and state inline interfaces and just export the factory function.
 
 ## Mixins
 
-The `createFactory` method supports an optional array of `React.Mixin<P,S>` which means that you can add mixins which have the lifecycle methods. These mixins seem different than the [traditional TypeScript mixins](https://typescript.codeplex.com/wikipage?title=Mixins%20in%20TypeScript) because React will call each mixins life cycle methods in the case of conflict.
+The `createFactory` method supports an optional array of `React.Mixin<P,S>` which means that you can add mixins which have the lifecycle methods. These mixins seem different than the [traditional TypeScript mixins](https://typescript.codeplex.com/wikipage?title=Mixins%20in%20TypeScript) because React will call each mixins life cycle methods in the case of conflict. This is the above example with a mixin.
+
+### LoggingMixin
+
+```ts
+/// <reference path="path/to/react/react.d.ts" />
+import TypedReact = require("typed-react");
+
+class LoggingMixin<P,S> extends React.Mixin<P, S> {
+    componentWillMount() {
+        console.log("Mounted");
+    }
+}
+
+var mixin = TypedReact.createMixin(LoggingMixin);
+export = mixin;
+```
+
+### Timer
+
+```ts
+import LoggingMixin = require("path/to/logging_mixin");
+import React = require("react");
+import TypedReact = require("typed-react");
+
+export interface TimerProps {
+    tickInterval: number;
+}
+
+interface TimerState {
+    ticksElapsed: number;
+}
+
+class Timer extends TypedReact.Component<TimerProps, TimerState> {
+    private interval: number;
+
+    getInitialState() {
+        return {
+            ticksElapsed: 0
+        };
+    }
+
+    tick() {
+        this.setState({
+            ticksElapsed: this.state.ticksElapsed + 1
+        });
+    }
+
+    componentDidMount() {
+        this.interval = setInterval(this.tick, this.props.tickInterval);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
+    render() {
+        return React.DOM.div(null, "Ticks Elapsed: ", this.state.ticksElapsed);
+    }
+}
+
+export var factory = TypedReact.createFactory(React, Timer, [LoggingMixin]);
+```
 
 ## Development Setup
 
