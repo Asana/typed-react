@@ -1,6 +1,8 @@
-/// <reference path="../typings/jest/jest.d.ts" />
-jest.autoMockOff();
+/// <reference path="../typings/mocha/mocha.d.ts" />
+import chai = require("chai");
 import TypedReact = require("../src/index");
+
+var expect = chai.expect;
 
 describe("Component", () => {
     var component: TypedReact.Component<any, any>;
@@ -10,21 +12,21 @@ describe("Component", () => {
     });
 
     it("should not have refs", () => {
-        expect(component.refs).toBeUndefined();
+        expect(component.refs).to.be.undefined;
     });
 
     it("should not have props", () => {
-        expect(component.props).toBeUndefined();
+        expect(component.props).to.be.undefined;
     });
 
     it("should not have state", () => {
-        expect(component.state).toBeUndefined();
+        expect(component.state).to.be.undefined;
     });
 
     var testNotImplemented = (methodName: string, fn: () => void): void => {
         it("should throw for " + methodName, () => {
             var err = new TypedReact.NotImplementedError(methodName);
-            expect(fn).toThrow(err);
+            expect(fn).to.throw(err);
         });
     };
 
@@ -61,6 +63,6 @@ describe("Component", () => {
     });
 
     it("should return null from render", () => {
-        expect(component.render()).toBeNull();
+        expect(component.render()).to.be.null;
     });
 });

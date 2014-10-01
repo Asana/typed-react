@@ -1,6 +1,8 @@
-/// <reference path="../typings/jest/jest.d.ts" />
-jest.autoMockOff();
+/// <reference path="../typings/mocha/mocha.d.ts" />
+import chai = require("chai");
 import TypedReact = require("../src/index");
+
+var expect = chai.expect;
 
 describe("NotImplementedError", () => {
     var err: TypedReact.NotImplementedError;
@@ -11,10 +13,10 @@ describe("NotImplementedError", () => {
     });
 
     it("should have a name", () => {
-        expect(err.name).toEqual("NotImplementedError");
+        expect(err.name).to.equal("NotImplementedError");
     });
 
     it("should have a message", () => {
-        expect(err.message).toEqual(methodName + " should be implemented by React");
+        expect(err.message).to.equal(methodName + " should be implemented by React");
     });
 });

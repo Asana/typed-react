@@ -2,7 +2,7 @@ var childProcess = require('child_process');
 var del = require('del');
 var glob = require('glob');
 var gulp = require('gulp');
-var jest = require('jest-cli');
+var mocha = require('gulp-mocha');
 var path = require('path');
 var runSequence = require('run-sequence');
 var tslint = require('gulp-tslint');
@@ -72,15 +72,11 @@ gulp.task('scripts', ['clean'], function() {
   return ts.js.pipe(gulp.dest(dirs.build));
 });
 
-gulp.task('spec', ['scripts'], function(callback) {
-  jest.runCLI({
-    config: {
-      rootDir: __dirname,
-      testDirectoryName: 'test'
-    }
-  }, function(success) {
-    callback(success ? null : success);
-  });
+gulp.task('spec', ['scripts'], function() {
+  return gulp.src(files.spec)
+    .pipe(mocha({
+      reporter: 'spec'
+    }));
 });
 
 gulp.task('build', ['copy']);
