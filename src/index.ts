@@ -59,7 +59,7 @@ export function createFactory<P, S>(factoryGenerator: (specification: React.Spec
     var displayName = component.prototype.constructor.name;
     // Do not override React
     delete component.prototype.constructor;
-    delete component.prototype.getDomNode;
+    delete component.prototype.getDOMNode;
     delete component.prototype.setState;
     delete component.prototype.replaceState;
     delete component.prototype.forceUpdate;
