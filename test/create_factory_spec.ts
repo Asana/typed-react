@@ -31,7 +31,7 @@ describe("createFactory", () => {
 
     describe("simple", () => {
         beforeEach(() => {
-            factory = TypedReact.createFactory(React, FactoryTest);
+            factory = TypedReact.createFactory<FactoryProps, FactoryState>(React.createClass, FactoryTest);
             descriptor = factory({
                 name: name
             });
@@ -52,7 +52,7 @@ describe("createFactory", () => {
 
         beforeEach(() => {
             mixin = TypedReact.createMixin(LoggingMixin);
-            factory = TypedReact.createFactory(React, FactoryTest, [mixin]);
+            factory = TypedReact.createFactory<FactoryProps, FactoryState>(React.createClass, FactoryTest, [mixin]);
             descriptor = factory({
                 name: name
             });
