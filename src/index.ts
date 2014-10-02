@@ -53,17 +53,13 @@ export class Component<P, S> implements React.Specification<P, S>, React.Compone
     }
 }
 
-export interface FactoryGenerator<P, S> {
-    createClass<P, S>(specification: React.Specification<P, S>): React.Factory<P>;
-}
-
-export function createFactory<P, S>(factoryGenerator: FactoryGenerator<P, S>,
+export function createFactory<P, S>(factoryGenerator: (specification: React.Specification<P, S>) => React.Factory<P>,
                                     component: { new(): Component<P, S> },
                                     mixins: React.Mixin<P, S>[] = []): React.Factory<P> {
     var displayName = component.prototype.constructor.name;
     // Do not override React
     delete component.prototype.constructor;
-    delete component.prototype.getDomNode;
+    delete component.prototype.getDOMNode;
     delete component.prototype.setState;
     delete component.prototype.replaceState;
     delete component.prototype.forceUpdate;
@@ -74,7 +70,7 @@ export function createFactory<P, S>(factoryGenerator: FactoryGenerator<P, S>,
     var spec: React.Specification<P, S> = component.prototype;
     spec.displayName = displayName;
     spec.mixins = mixins;
-    return factoryGenerator.createClass(spec);
+    return factoryGenerator(spec);
 }
 
 export function createMixin<P, S>(mixin: { new(): React.Mixin<P, S> }): React.Mixin<P, S> {
