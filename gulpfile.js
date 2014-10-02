@@ -1,5 +1,6 @@
 var childProcess = require('child_process');
 var del = require('del');
+var dts = require('dts-bundle');
 var glob = require('glob');
 var gulp = require('gulp');
 var mocha = require('gulp-mocha');
@@ -8,27 +9,37 @@ var runSequence = require('run-sequence');
 var tslint = require('gulp-tslint');
 var typescript = require('gulp-typescript');
 
-var dirs = {
-  build: path.join(__dirname, 'build'),
-  src: path.join(__dirname, 'src'),
-  test: path.join(__dirname, 'test'),
-  typings: path.join(__dirname, 'typings')
-};
+var dirs = {};
+dirs.build = path.join(__dirname, 'build');
+dirs.js = path.join(dirs.build, 'src');
+dirs.spec = path.join(dirs.build, 'test');
+dirs.src = path.join(__dirname, 'src');
+dirs.test = path.join(__dirname, 'test');
+dirs.typings = path.join(__dirname, 'typings');
 
-var files = {
-  typings: path.join(dirs.typings, '**', '*.d.ts'),
-  build: path.join(dirs.build, 'src', '**', '*.{d.ts,js}'),
-  ts: path.join(__dirname, '{src,test}', '**', '*.ts'),
-  spec: path.join(dirs.build, 'test', '**', '*.js'),
-  main: path.join(__dirname, 'index.js'),
-  dts: path.join(__dirname, 'index.d.ts')
-};
+var files = {};
+files.build = path.join(dirs.build, 'src', '**', '*.{d.ts,js}');
+files.definition = path.join(__dirname, 'typed-react.d.ts');
+files.dts = path.join(dirs.js, 'index.d.ts');
+files.main = path.join(__dirname, 'index.js');
+files.spec = path.join(dirs.build, 'test', '**', '*.js');
+files.ts = path.join(__dirname, '{src,test}', '**', '*.ts');
+files.typings = path.join(dirs.typings, '**', '*.d.ts');
 
-gulp.task('clean', function(callback) {
-  del([dirs.build, files.main, files.dts], callback);
+gulp.task('build', ['copy']);
+
+gulp.task('bundle', ['scripts'], function() {
+  dts.bundle({
+    name: 'typed-react',
+    main: files.dts
+  })
 });
 
-gulp.task('copy', ['scripts'], function() {
+gulp.task('clean', function(callback) {
+  del([dirs.build, files.main, files.definition], callback);
+});
+
+gulp.task('copy', ['remove'], function() {
   gulp.src(files.build)
     .pipe(gulp.dest(__dirname));
 });
@@ -57,6 +68,10 @@ gulp.task('lint', function() {
     .pipe(tslint.report('prose'));
 });
 
+gulp.task('remove', ['bundle'], function(callback) {
+  del([files.dts], callback);
+});
+
 gulp.task('scripts', ['clean'], function() {
   var ts = gulp.src([files.ts, files.typings])
     .pipe(typescript({
@@ -78,8 +93,6 @@ gulp.task('spec', ['scripts'], function() {
       reporter: 'spec'
     }));
 });
-
-gulp.task('build', ['copy']);
 
 gulp.task('test', function(callback) {
   return runSequence('lint', 'spec', callback);

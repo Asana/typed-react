@@ -34,4 +34,4 @@ node_modules
 
 # Build artifacts
 index.js
-index.d.ts
+typed-react.d.ts
