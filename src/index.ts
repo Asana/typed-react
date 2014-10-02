@@ -16,7 +16,7 @@ export class Component<P, S> implements React.Specification<P, S>, React.Compone
     public props: P;
     public state: S;
 
-    getDomNode(): Element {
+    getDOMNode(): Element {
         throw new NotImplementedError("getDomNode");
     }
 
