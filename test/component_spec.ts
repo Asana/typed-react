@@ -31,7 +31,7 @@ describe("Component", () => {
     };
 
     testNotImplemented("getDomNode", () => {
-        component.getDomNode();
+        component.getDOMNode();
     });
 
     testNotImplemented("setState", () => {
