@@ -29,7 +29,7 @@
     "gulp-mocha": "^1.1.0",
     "gulp-tslint": "^1.3.0",
     "gulp-typescript": "^2.1.0",
-    "react": "^0.11.2",
+    "react": "^0.12.0-rc1",
     "typescript-formatter": "^0.1.4"
   },
   "typescript": {

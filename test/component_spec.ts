@@ -50,10 +50,6 @@ describe("Component", () => {
         component.isMounted();
     });
 
-    testNotImplemented("transferPropsTo", () => {
-        component.transferPropsTo(null);
-    });
-
     testNotImplemented("setProps", () => {
         component.setProps(null);
     });

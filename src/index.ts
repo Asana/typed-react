@@ -1,3 +1,5 @@
+/// <reference path="../typings/react/react.d.ts" />
+
 export class NotImplementedError implements Error {
     public name = "NotImplementedError";
     public message: string;
@@ -34,10 +36,6 @@ export class Component<P, S> implements React.Specification<P, S>, React.Compone
         throw new NotImplementedError("isMounted");
     }
 
-    transferPropsTo(target: React.Factory<P>): React.Descriptor<P> {
-        throw new NotImplementedError("transferPropsTo");
-    }
-
     setProps(nextProps: P, callback?: () => void): void {
         throw new NotImplementedError("setProps");
     }
@@ -46,25 +44,39 @@ export class Component<P, S> implements React.Specification<P, S>, React.Compone
         throw new NotImplementedError("replaceProps");
     }
 
-    render(): React.Descriptor<any> {
+    render(): React.ReactElement<any, any> {
         return null;
     }
 }
 
-export function createFactory<P, S>(factoryGenerator: (specification: React.Specification<P, S>) => React.Factory<P>,
-                                    component: { new(): Component<P, S> }): React.Factory<P> {
-    var displayName = component.prototype.constructor.name;
+export interface ClassCreator<P, S> {
+    (specification: React.Specification<P, S>): React.ReactComponentFactory<P>;
+}
+
+export interface FactoryCreator<P> {
+    (clazz: React.ReactComponentFactory<P>): React.ReactComponentFactory<P>;
+}
+
+export interface ComponentClass<P, S> {
+    new(): Component<P, S>
+}
+
+export function createFactory<P, S>(
+    createClass: ClassCreator<P, S>,
+    createFactory: FactoryCreator<P>,
+    clazz: ComponentClass<P, S>): React.ReactComponentFactory<P> {
+    var displayName = clazz.prototype.constructor.name;
     // Do not override React
-    delete component.prototype.constructor;
-    delete component.prototype.getDOMNode;
-    delete component.prototype.setState;
-    delete component.prototype.replaceState;
-    delete component.prototype.forceUpdate;
-    delete component.prototype.isMounted;
-    delete component.prototype.transferPropsTo;
-    delete component.prototype.setProps;
-    delete component.prototype.replaceProps;
-    var spec: React.Specification<P, S> = component.prototype;
+    delete clazz.prototype.constructor;
+    delete clazz.prototype.getDOMNode;
+    delete clazz.prototype.setState;
+    delete clazz.prototype.replaceState;
+    delete clazz.prototype.forceUpdate;
+    delete clazz.prototype.isMounted;
+    delete clazz.prototype.transferPropsTo;
+    delete clazz.prototype.setProps;
+    delete clazz.prototype.replaceProps;
+    var spec: React.Specification<P, S> = clazz.prototype;
     spec.displayName = displayName;
-    return factoryGenerator(spec);
+    return createFactory(createClass(spec));
 }
