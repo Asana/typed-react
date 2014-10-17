@@ -1,5 +1,3 @@
-/// <reference path="../typings/react/react.d.ts" />
-
 export class NotImplementedError implements Error {
     public name = "NotImplementedError";
     public message: string;
@@ -54,8 +52,7 @@ export class Component<P, S> implements React.Specification<P, S>, React.Compone
 }
 
 export function createFactory<P, S>(factoryGenerator: (specification: React.Specification<P, S>) => React.Factory<P>,
-                                    component: { new(): Component<P, S> },
-                                    mixins: React.Mixin<P, S>[] = []): React.Factory<P> {
+                                    component: { new(): Component<P, S> }): React.Factory<P> {
     var displayName = component.prototype.constructor.name;
     // Do not override React
     delete component.prototype.constructor;
@@ -69,12 +66,5 @@ export function createFactory<P, S>(factoryGenerator: (specification: React.Spec
     delete component.prototype.replaceProps;
     var spec: React.Specification<P, S> = component.prototype;
     spec.displayName = displayName;
-    spec.mixins = mixins;
     return factoryGenerator(spec);
-}
-
-export function createMixin<P, S>(mixin: { new(): React.Mixin<P, S> }): React.Mixin<P, S> {
-    delete mixin.prototype.constructor;
-    var mixinLiteral: React.Mixin<P, S> = mixin.prototype;
-    return mixinLiteral;
 }
