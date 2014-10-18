@@ -19,23 +19,19 @@ class FactoryTest extends TypedReact.Component<FactoryProps, FactoryState> {
 }
 
 describe("createFactory", () => {
-    var factory: React.Factory<FactoryProps>;
-    var descriptor: React.Descriptor<FactoryProps>;
+    var factory: React.ReactComponentFactory<FactoryProps>;
+    var descriptor: React.ReactComponentElement<FactoryProps>;
     var name = "test";
 
     beforeEach(() => {
-        factory = TypedReact.createFactory<FactoryProps, FactoryState>(React.createClass, FactoryTest);
+        factory = TypedReact.createFactory<FactoryProps, FactoryState>(React.createClass, React.createFactory, FactoryTest);
         descriptor = factory({
             name: name
         });
     });
 
-    it("should be a factory", () => {
-        expect(React.isValidClass(factory)).to.be.true;
-    });
-
     it("should produce a valid descriptor", () => {
-        expect(React.isValidComponent(descriptor)).to.be.true;
+        expect(React.isValidElement(descriptor)).to.be.true;
         expect(descriptor.props.name).to.equal(name);
     });
 });

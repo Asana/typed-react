@@ -5,7 +5,6 @@ var glob = require('glob');
 var gulp = require('gulp');
 var mocha = require('gulp-mocha');
 var path = require('path');
-var runSequence = require('run-sequence');
 var tslint = require('gulp-tslint');
 var typescript = require('gulp-typescript');
 
@@ -94,6 +93,4 @@ gulp.task('spec', ['scripts'], function() {
     }));
 });
 
-gulp.task('test', function(callback) {
-  return runSequence('lint', 'spec', callback);
-});
+gulp.task('test', ['lint', 'spec']);

@@ -50,7 +50,7 @@ class Timer extends TypedReact.Component<TimerProps, TimerState> {
     }
 }
 
-export var factory = TypedReact.createFactory<TimerProps, TimerState>(React.createClass, Timer);
+export var factory = TypedReact.createFactory<TimerProps, TimerState>(React.createClass, React.createFactory, Timer);
 ```
 
 In this case we export the Props and the Factory but we could make the props and state inline interfaces and just export the factory function.
