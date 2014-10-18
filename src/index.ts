@@ -1,5 +1,3 @@
-/// <reference path="../typings/react/react.d.ts" />
-
 export class NotImplementedError implements Error {
     public name = "NotImplementedError";
     public message: string;
