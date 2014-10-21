@@ -59,9 +59,8 @@ export interface ComponentClass<P, S> {
     new(): Component<P, S>
 }
 
-export function createFactory<P, S>(
+export function createClass<P, S>(
     createClass: ClassCreator<P, S>,
-    createFactory: FactoryCreator<P>,
     clazz: ComponentClass<P, S>): React.ReactComponentFactory<P> {
     var displayName = clazz.prototype.constructor.name;
     // Do not override React
@@ -76,5 +75,13 @@ export function createFactory<P, S>(
     delete clazz.prototype.replaceProps;
     var spec: React.Specification<P, S> = clazz.prototype;
     spec.displayName = displayName;
-    return createFactory(createClass(spec));
+    return createClass(spec);
 }
+
+export function createFactory<P, S>(
+    createClass_: ClassCreator<P, S>,
+    createFactory: FactoryCreator<P>,
+    clazz: ComponentClass<P, S>): React.ReactComponentFactory<P> {
+    return createFactory(createClass(createClass_, clazz));
+}
+
