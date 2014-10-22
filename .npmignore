@@ -1,10 +1,7 @@
-build/test
+build
 src
 test
-typings/chai
-typings/mocha
-typings/react-addons
-typings/tsd.d.ts
+typings
 gulpfile.js
 .travis.yml
 tsd.json
