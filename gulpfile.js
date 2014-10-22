@@ -10,6 +10,7 @@ var typescript = require('gulp-typescript');
 
 var dirs = {};
 dirs.build = path.join(__dirname, 'build');
+dirs.dist = path.join(__dirname, 'dist');
 dirs.js = path.join(dirs.build, 'src');
 dirs.spec = path.join(dirs.build, 'test');
 dirs.src = path.join(__dirname, 'src');
@@ -18,29 +19,28 @@ dirs.typings = path.join(__dirname, 'typings');
 
 var files = {};
 files.build = path.join(dirs.build, 'src', '**', '*.{d.ts,js}');
-files.definition = path.join(__dirname, 'typed-react.d.ts');
-files.dts = path.join(dirs.js, 'index.d.ts');
-files.main = path.join(__dirname, 'index.js');
+files.dts = path.join(dirs.dist, 'index.d.ts');
 files.spec = path.join(dirs.build, 'test', '**', '*.js');
 files.ts = path.join(__dirname, '{src,test}', '**', '*.ts');
 files.typings = path.join(dirs.typings, '**', '*.d.ts');
 
-gulp.task('build', ['copy']);
+gulp.task('build', ['bundle']);
 
-gulp.task('bundle', ['scripts'], function() {
+gulp.task('bundle', ['copy'], function() {
   dts.bundle({
     name: 'typed-react',
-    main: files.dts
-  })
+    main: files.dts,
+    removeSource: true
+  });
 });
 
 gulp.task('clean', function(callback) {
-  del([dirs.build, files.main, files.definition], callback);
+  del([dirs.build, dirs.dist], callback);
 });
 
-gulp.task('copy', ['remove'], function() {
-  gulp.src(files.build)
-    .pipe(gulp.dest(__dirname));
+gulp.task('copy', ['test'], function() {
+  return gulp.src(files.build)
+    .pipe(gulp.dest(dirs.dist));
 });
 
 gulp.task('format', function(callback) {
@@ -65,10 +65,6 @@ gulp.task('lint', function() {
   return gulp.src(files.ts)
     .pipe(tslint())
     .pipe(tslint.report('prose'));
-});
-
-gulp.task('remove', ['bundle'], function(callback) {
-  del([files.dts], callback);
 });
 
 gulp.task('scripts', ['clean'], function() {
