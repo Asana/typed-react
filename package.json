@@ -2,7 +2,7 @@
   "name": "typed-react",
   "version": "2.0.0",
   "description": "A binding layer between React and TypeScript",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "node_modules/.bin/gulp test"
   },
@@ -33,6 +33,6 @@
     "typescript-formatter": "^0.1.4"
   },
   "typescript": {
-    "definition": "typed-react.d.ts"
+    "definition": "dist/typed-react.d.ts"
   }
 }
