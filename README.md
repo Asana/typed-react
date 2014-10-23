@@ -50,13 +50,14 @@ class Timer extends TypedReact.Component<TimerProps, TimerState> {
     }
 }
 
-export var factory = TypedReact.createFactory<TimerProps, TimerState>(React.createClass, React.createFactory, Timer);
+export var timer = TypedReact.createClass<TimerProps, TimerState>(React.createClass, Timer);
 ```
 
 In this case we export the Props and the Factory but we could make the props and state inline interfaces and just export the factory function.
 
 ## Changelog
 
+- *2.1* Switching to createClass
 - *2.0* React 0.12.RC
 - *1.4* Removed incorrect mixin support
 - *1.3* Mixins
