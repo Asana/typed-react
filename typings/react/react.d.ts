@@ -12,6 +12,12 @@ declare module React {
 
     export function createFactory<P>(clazz: ReactComponentFactory<P>): ReactComponentFactory<P>;
 
+    export function createElement<P>(clazz: ReactComponentFactory<P>, props: P, ...children: any[]): ReactComponentElement<P>;
+
+    export function createElement(type: string, props: DomAttributes, ...children: any[]): ReactUnknownDOMElement;
+
+    export function createElement(type: string, props: SvgAttributes, ...children: any[]): ReactUnknownDOMElement;
+
     export function render<P>(component: ReactComponentElement<P>, container: Element, callback?: () => void): ReactComponentElement<P>;
 
     export function render(component: ReactHTMLElement, container: Element, callback?: () => void): ReactHTMLElement;
@@ -81,6 +87,9 @@ declare module React {
     }
 
     export interface ReactSVGElement extends ReactDOMElement<SvgAttributes> {
+    }
+
+    export interface ReactUnknownDOMElement extends ReactDOMElement<AllAttributes> {
     }
 
     export interface ReactComponentElement<P> extends ReactElement<ReactClass<P>, P> {
@@ -464,6 +473,9 @@ declare module React {
         y1?: any;
         y2?: any;
         y?: any;
+    }
+
+    export interface AllAttributes extends DomAttributes, SvgAttributes {
     }
 
     export var DOM: {
