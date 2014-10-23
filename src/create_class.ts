@@ -1,10 +1,8 @@
 import ClassCreator = require("./class_creator");
 import ComponentClass = require("./component_class");
-import FactoryCreator = require("./factory_creator");
 
-function createFactory<P, S>(
+function createClass<P, S>(
     createClass: ClassCreator<P, S>,
-    createFactory: FactoryCreator<P>,
     clazz: ComponentClass<P, S>): React.ReactComponentFactory<P> {
     var displayName = clazz.prototype.constructor.name;
     // Do not override React
@@ -19,7 +17,7 @@ function createFactory<P, S>(
     delete clazz.prototype.replaceProps;
     var spec: React.Specification<P, S> = clazz.prototype;
     spec.displayName = displayName;
-    return createFactory(createClass(spec));
+    return createClass(spec);
 }
 
-export = createFactory;
+export = createClass;

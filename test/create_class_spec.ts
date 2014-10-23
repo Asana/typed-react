@@ -19,12 +19,14 @@ class FactoryTest extends TypedReact.Component<FactoryProps, FactoryState> {
 }
 
 describe("createFactory", () => {
+    var clazz: React.ReactComponentFactory<FactoryProps>;
     var factory: React.ReactComponentFactory<FactoryProps>;
     var descriptor: React.ReactComponentElement<FactoryProps>;
     var name = "test";
 
     beforeEach(() => {
-        factory = TypedReact.createFactory<FactoryProps, FactoryState>(React.createClass, React.createFactory, FactoryTest);
+        clazz = TypedReact.createClass<FactoryProps, FactoryState>(React.createClass, FactoryTest);
+        factory = React.createFactory(clazz);
         descriptor = factory({
             name: name
         });
