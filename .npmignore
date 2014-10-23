@@ -7,3 +7,4 @@ gulpfile.js
 tsd.json
 tslint.json
 *.iml
+.idea
