@@ -57,10 +57,10 @@ In this case we export the Props and the Factory but we could make the props and
 
 ## Changelog
 
-- *2.1* Switching to createClass
-- *2.0* React 0.12.RC
-- *1.4* Removed incorrect mixin support
-- *1.3* Mixins
+- `2.1` Switching to createClass
+- `2.0` React 0.12.RC
+- `1.4` Removed incorrect mixin support
+- `1.3` Mixins
 
 ## Development Setup
 
