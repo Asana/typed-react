@@ -13,8 +13,10 @@ interface FactoryState {
 }
 
 class FactoryTest extends TypedReact.Component<FactoryProps, FactoryState> {
+    greeting: string = "Greetings, ";
+
     render() {
-        return React.DOM.h1(null, "Greetings", name);
+        return React.DOM.h1(null, this.greeting, this.props.name);
     }
 }
 
@@ -35,5 +37,9 @@ describe("createFactory", () => {
     it("should produce a valid descriptor", () => {
         expect(React.isValidElement(descriptor)).to.be.true;
         expect(descriptor.props.name).to.equal(name);
+    });
+
+    it("should keep class properties", () => {
+        expect(React.renderToStaticMarkup(factory({name: "Asana"}))).to.equal("<h1>Greetings, Asana</h1>");
     });
 });

@@ -5,6 +5,7 @@ function createClass<P, S>(
     createClass: ClassCreator<P, S>,
     clazz: ComponentClass<P, S>): React.ReactComponentFactory<P> {
     var displayName = clazz.prototype.constructor.name;
+    var componentWillMount = clazz.prototype.componentWillMount;
     // Do not override React
     delete clazz.prototype.constructor;
     delete clazz.prototype.getDOMNode;
@@ -17,6 +18,12 @@ function createClass<P, S>(
     delete clazz.prototype.replaceProps;
     var spec: React.Specification<P, S> = clazz.prototype;
     spec.displayName = displayName;
+    spec.componentWillMount = function() {
+        clazz.apply(this);
+        if (componentWillMount) {
+            componentWillMount.apply(this);
+        }
+    };
     return createClass(spec);
 }
 
