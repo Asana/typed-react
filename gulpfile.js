@@ -28,9 +28,9 @@ gulp.task('build', ['bundle']);
 
 gulp.task('bundle', ['copy'], function() {
   dts.bundle({
+    externals: true,
     name: 'typed-react',
-    main: files.dts,
-    removeSource: true
+    main: files.dts
   });
 });
 
