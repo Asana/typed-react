@@ -1,7 +1,5 @@
-import Component = require("./component");
-
 interface ComponentClass<P, S> {
-    new (): Component<P, S>
+    new (): React.Specification<P, S>
 }
 
 export = ComponentClass;
