@@ -1,29 +1,42 @@
 import ClassCreator = require("./class_creator");
 import ComponentClass = require("./component_class");
 
+var ILLEGAL_KEYS: {[key: string]: boolean} = {
+    constructor: true,
+    refs: true,
+    props: true,
+    state: true,
+    getDOMNode: true,
+    setState: true,
+    replaceState: true,
+    forceUpdate: true,
+    isMounted: true,
+    setProps: true,
+    replaceProps: true
+};
+
 function createClass<P, S>(
     createClass: ClassCreator<P, S>,
     clazz: ComponentClass<P, S>): React.ReactComponentFactory<P> {
-    var displayName = clazz.prototype.constructor.name;
-    var componentWillMount = clazz.prototype.componentWillMount;
-    // Do not override React
-    delete clazz.prototype.constructor;
-    delete clazz.prototype.getDOMNode;
-    delete clazz.prototype.setState;
-    delete clazz.prototype.replaceState;
-    delete clazz.prototype.forceUpdate;
-    delete clazz.prototype.isMounted;
-    delete clazz.prototype.transferPropsTo;
-    delete clazz.prototype.setProps;
-    delete clazz.prototype.replaceProps;
-    var spec: React.Specification<P, S> = clazz.prototype;
-    spec.displayName = displayName;
-    spec.componentWillMount = function() {
-        clazz.apply(this);
-        if (componentWillMount) {
-            componentWillMount.apply(this);
+    var key: string;
+    var spec: React.Specification<P, S> = (<React.Specification<P, S>>{});
+    spec.displayName = clazz.prototype.constructor.name;
+    for (key in clazz.prototype) {
+        if (!ILLEGAL_KEYS[key]) {
+            (<any>spec)[key] = (<any>clazz.prototype)[key];
         }
-    };
+    }
+    if (spec.componentWillMount !== undefined) {
+        var componentWillMount = spec.componentWillMount;
+        spec.componentWillMount = function() {
+            clazz.apply(this);
+            componentWillMount.apply(this);
+        };
+    } else {
+        spec.componentWillMount = function() {
+            clazz.apply(this);
+        };
+    }
     return createClass(spec);
 }
 
