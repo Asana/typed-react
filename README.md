@@ -11,6 +11,9 @@ npm install typed-react --save
 ## Example
 
 ```ts
+/// <reference path='../path/to/react.d.ts' />
+/// <reference path='../path/to/typed-react.d.ts' />
+
 import React = require("react");
 import TypedReact = require("typed-react");
 
