@@ -1,30 +1,11 @@
 /// <reference path="../typings/react/react.d.ts" />
 import ComponentClass = require("./component_class");
+import extractPrototype = require("./extract_prototype");
 import React = require("react");
 
-var ILLEGAL_KEYS: { [key: string]: boolean } = {
-    constructor: true,
-    refs: true,
-    props: true,
-    state: true,
-    getDOMNode: true,
-    setState: true,
-    replaceState: true,
-    forceUpdate: true,
-    isMounted: true,
-    setProps: true,
-    replaceProps: true
-};
-
-function createClass<P, S>(clazz: ComponentClass<P, S>): React.ReactComponentFactory<P> {
-    var key: string;
-    var spec: React.Specification<P, S> = (<React.Specification<P, S>>{});
+function createClass<P, S>(clazz: ComponentClass<P, S>, mixins?: React.Mixin<P, S>[]): React.ReactComponentFactory<P> {
+    var spec: React.Specification<P, S> = extractPrototype(clazz);
     spec.displayName = clazz.prototype.constructor.name;
-    for (key in clazz.prototype) {
-        if (!ILLEGAL_KEYS[key]) {
-            (<any>spec)[key] = (<any>clazz.prototype)[key];
-        }
-    }
     if (spec.componentWillMount !== undefined) {
         var componentWillMount = spec.componentWillMount;
         spec.componentWillMount = function() {
@@ -35,6 +16,9 @@ function createClass<P, S>(clazz: ComponentClass<P, S>): React.ReactComponentFac
         spec.componentWillMount = function() {
             clazz.apply(this);
         };
+    }
+    if (mixins !== undefined && mixins !== null) {
+        spec.mixins = mixins;
     }
     return React.createClass(spec);
 }

@@ -13,6 +13,14 @@ describe("TypedReact", () => {
         assert.property(TypedReact, "createClass");
     });
 
+    it("should have extractPrototype", () => {
+        assert.property(TypedReact, "extractPrototype");
+    });
+
+    it("should have Mixin", () => {
+        assert.property(TypedReact, "Mixin");
+    });
+
     it("should have NotImplementedError", () => {
         assert.property(TypedReact, "NotImplementedError");
     });
