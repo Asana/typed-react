@@ -1,92 +1,117 @@
-var childProcess = require('child_process');
 var del = require('del');
-var dts = require('dts-bundle');
+var dtsBundle = require('dts-bundle');
+var eventStream = require('event-stream');
 var glob = require('glob');
 var gulp = require('gulp');
+var istanbul = require('gulp-istanbul');
 var mocha = require('gulp-mocha');
-var path = require('path');
+var tsformat = require('typescript-formatter');
 var tslint = require('gulp-tslint');
 var typescript = require('gulp-typescript');
 
-var dirs = {};
-dirs.build = path.join(__dirname, 'build');
-dirs.dist = path.join(__dirname, 'dist');
-dirs.js = path.join(dirs.build, 'src');
-dirs.spec = path.join(dirs.build, 'test');
-dirs.src = path.join(__dirname, 'src');
-dirs.test = path.join(__dirname, 'test');
-dirs.typings = path.join(__dirname, 'typings');
-
-var files = {};
-files.build = path.join(dirs.build, 'src', '**', '*.{d.ts,js}');
-files.dts = path.join(dirs.dist, 'index.d.ts');
-files.spec = path.join(dirs.build, 'test', '**', '*.js');
-files.ts = path.join(__dirname, '{src,test}', '**', '*.ts');
-files.typings = path.join(dirs.typings, '**', '*.d.ts');
-
-gulp.task('build', ['bundle']);
+var build = 'build';
+var dist = 'dist';
+var dts = 'typings/**/*.d.ts';
+var js = 'build/src/**/*.js';
+var spec = 'build/test/**/*_spec.js';
+var src = 'build/src/**/*';
+var ts = '{src,test}/**/*.ts';
 
 gulp.task('bundle', ['copy'], function() {
-  dts.bundle({
+  dtsBundle.bundle({
+    main: 'dist/index.d.ts',
     name: 'typed-react',
-    main: files.dts,
-    removeSource: true
+    prefix: '',
+    removeSource: true,
+    separator: '/dist/',
   });
 });
 
 gulp.task('clean', function(callback) {
-  del([dirs.build, dirs.dist], callback);
+  del([build, dist], callback);
 });
 
-gulp.task('copy', ['test'], function() {
-  return gulp.src(files.build)
-    .pipe(gulp.dest(dirs.dist));
+gulp.task('copy', ['scripts'], function() {
+  return gulp.src(src)
+    .pipe(gulp.dest(dist));
 });
 
 gulp.task('format', function(callback) {
-  glob(files.ts, function(err, files) {
+  glob(ts, function(err, files) {
     if (err) {
       return callback(err);
     }
-    if (files.length === 0) {
-      return callback(null);
-    }
-    var command = [
-      'node_modules/.bin/tsfmt',
-      '--replace',
-      '--no-editorconfig',
-      '--no-tsfmt'
-    ].concat(files).join(' ');
-    childProcess.exec(command, callback);
+    tsformat.processFiles(files, {
+      editorconfig: false,
+      replace: true,
+      tsfmt: false,
+      tslint: true
+    });
+    return callback(null);
   });
 });
 
 gulp.task('lint', function() {
-  return gulp.src(files.ts)
+  return gulp.src(ts)
     .pipe(tslint())
-    .pipe(tslint.report('prose'));
+    .pipe(tslint.report('verbose'));
 });
 
-gulp.task('scripts', ['clean'], function() {
-  var ts = gulp.src([files.ts, files.typings])
+gulp.task('test', ['bundle', 'spec']);
+
+gulp.task('scripts', ['clean', 'lint'], function() {
+  var hasError = false;
+  var compiler = gulp.src([ts, dts])
     .pipe(typescript({
-      removeComments: false,
+      declarationFiles: true,
+      module: 'commonjs',
+      noExternalResolve: true,
       noImplicitAny: true,
       noLib: false,
-      target: 'ES5',
-      module: 'commonjs',
-      declarationFiles: true,
-      noExternalResolve: true
+      removeComments: false,
+      sortOutput: false,
+      target: 'ES5'
     }));
-  ts.dts.pipe(gulp.dest(dirs.build));
-  return ts.js.pipe(gulp.dest(dirs.build));
+  var dtsStream = compiler.dts.pipe(gulp.dest(build));
+  var jsStream = compiler.js
+    .on('error', function() {
+      hasError = true;
+    })
+    .on('end', function() {
+      if (hasError) {
+        process.exit(8);
+      }
+    })
+    .pipe(gulp.dest(build));
+  return eventStream.merge(dtsStream, jsStream);
 });
 
-gulp.task('spec', ['scripts'], function() {
-  return gulp.src(files.spec)
-    .pipe(mocha({
-      reporter: 'spec'
-    }));
+gulp.task('spec', ['scripts'], function(callback) {
+  gulp.src(js)
+    .pipe(istanbul({
+      includeUntested: true
+    }))
+    .on('finish', function() {
+      gulp.src(spec, {
+          read: false
+        })
+        .pipe(mocha({
+          reporter: process.env.TRAVIS ? 'spec' : 'nyan'
+        }))
+        .pipe(istanbul.writeReports({
+          reporters: ['text', 'text-summary']
+        }))
+        .on('end', function() {
+          var errOrNull = null;
+          var coverage = istanbul.summarizeCoverage();
+          var incomplete = Object.keys(coverage).filter(function(key) {
+            return coverage[key].pct !== 100;
+          });
+          if (incomplete.length > 0) {
+            errOrNull = new Error(
+              'Incomplete coverage for ' + incomplete.join(', '));
+          }
+          callback(errOrNull);
+        });
+    });
 });
-
-gulp.task('test', ['lint', 'spec']);
