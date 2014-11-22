@@ -1,22 +1,22 @@
 /// <reference path="../typings/mocha/mocha.d.ts" />
 import chai = require("chai");
-import TypedReact = require("../src/index");
+import NotImplementedError = require("../src/not_implemented_error");
 
-var expect = chai.expect;
+var assert = chai.assert;
 
 describe("NotImplementedError", () => {
-    var err: TypedReact.NotImplementedError;
+    var err: NotImplementedError;
     var methodName = "chai";
 
     beforeEach(() => {
-        err = new TypedReact.NotImplementedError(methodName);
+        err = new NotImplementedError(methodName);
     });
 
     it("should have a name", () => {
-        expect(err.name).to.equal("NotImplementedError");
+        assert.equal(err.name, "NotImplementedError");
     });
 
     it("should have a message", () => {
-        expect(err.message).to.equal(methodName + " should be implemented by React");
+        assert.equal(err.message, methodName + " should be implemented by React");
     });
 });

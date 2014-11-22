@@ -1,32 +1,32 @@
 /// <reference path="../typings/mocha/mocha.d.ts" />
 import chai = require("chai");
-import TypedReact = require("../src/index");
+import Component = require("../src/component");
+import NotImplementedError = require("../src/not_implemented_error");
 
-var expect = chai.expect;
+var assert = chai.assert;
 
 describe("Component", () => {
-    var component: TypedReact.Component<any, any>;
+    var component: Component<any, any>;
 
     beforeEach(() => {
-        component = new TypedReact.Component<any, any>();
+        component = new Component<any, any>();
     });
 
     it("should not have refs", () => {
-        expect(component.refs).to.be.undefined;
+        assert.isUndefined(component.refs);
     });
 
     it("should not have props", () => {
-        expect(component.props).to.be.undefined;
+        assert.isUndefined(component.props);
     });
 
     it("should not have state", () => {
-        expect(component.state).to.be.undefined;
+        assert.isUndefined(component.state);
     });
 
     var testNotImplemented = (methodName: string, fn: () => void): void => {
         it("should throw for " + methodName, () => {
-            var err = new TypedReact.NotImplementedError(methodName);
-            expect(fn).to.throw(err);
+            assert.throws(fn, NotImplementedError, methodName + " should be implemented by React");
         });
     };
 
@@ -59,6 +59,6 @@ describe("Component", () => {
     });
 
     it("should return null from render", () => {
-        expect(component.render()).to.be.null;
+        assert.isNull(component.render());
     });
 });

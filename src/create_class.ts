@@ -1,5 +1,5 @@
-import ClassCreator = require("./class_creator");
 import ComponentClass = require("./component_class");
+import React = require("react");
 
 var ILLEGAL_KEYS: {[key: string]: boolean} = {
     constructor: true,
@@ -15,9 +15,7 @@ var ILLEGAL_KEYS: {[key: string]: boolean} = {
     replaceProps: true
 };
 
-function createClass<P, S>(
-    createClass: ClassCreator<P, S>,
-    clazz: ComponentClass<P, S>): React.ReactComponentFactory<P> {
+function createClass<P, S>(clazz: ComponentClass<P, S>): React.ReactComponentFactory<P> {
     var key: string;
     var spec: React.Specification<P, S> = (<React.Specification<P, S>>{});
     spec.displayName = clazz.prototype.constructor.name;
@@ -37,7 +35,7 @@ function createClass<P, S>(
             clazz.apply(this);
         };
     }
-    return createClass(spec);
+    return React.createClass(spec);
 }
 
 export = createClass;

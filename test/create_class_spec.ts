@@ -1,9 +1,10 @@
 /// <reference path="../typings/mocha/mocha.d.ts" />
 import chai = require("chai");
-import TypedReact = require("../src/index");
-import React = require("react/addons");
+import Component = require("../src/component");
+import createClass = require("../src/create_class");
+import React = require("react");
 
-var expect = chai.expect;
+var assert = chai.assert;
 
 interface FactoryProps {
     name: string;
@@ -12,7 +13,7 @@ interface FactoryProps {
 interface FactoryState {
 }
 
-class FactoryTest extends TypedReact.Component<FactoryProps, FactoryState> {
+class FactoryTest extends Component<FactoryProps, FactoryState> {
     greeting: string = "Greetings, ";
 
     render() {
@@ -30,7 +31,7 @@ describe("createFactory", () => {
     var name = "test";
 
     beforeEach(() => {
-        clazz = TypedReact.createClass<FactoryProps, FactoryState>(React.createClass, FactoryTest);
+        clazz = createClass(FactoryTest);
         factory = React.createFactory(clazz);
         descriptor = factory({
             name: name
@@ -38,17 +39,21 @@ describe("createFactory", () => {
     });
 
     it("should produce a valid descriptor", () => {
-        expect(React.isValidElement(descriptor)).to.be.true;
-        expect(descriptor.props.name).to.equal(name);
+        assert.isTrue(React.isValidElement(descriptor));
+        assert.equal(descriptor.props.name, name);
     });
 
     it("should keep class properties", () => {
-        expect(React.renderToStaticMarkup(factory({name: "Asana"}))).to.equal("<h1>Greetings, Asana</h1>");
+        assert.equal(React.renderToStaticMarkup(factory({
+            name: "Asana"
+        })), "<h1>Greetings, Asana</h1>");
     });
 
     it("should keep inherited methods and props", () => {
-        var inheritedClazz = TypedReact.createClass<FactoryProps, FactoryState>(React.createClass, InheritanceTest);
+        var inheritedClazz = createClass(InheritanceTest);
         var inheritedFactory = React.createFactory(inheritedClazz);
-        expect(React.renderToStaticMarkup(inheritedFactory({name: "Asana"}))).to.equal("<h1>Greetings, Asana</h1>");
+        assert.equal(React.renderToStaticMarkup(inheritedFactory({
+            name: "Asana"
+        })), "<h1>Greetings, Asana</h1>");
     });
 });
