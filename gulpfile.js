@@ -19,7 +19,10 @@ var ts = '{src,test}/**/*.ts';
 gulp.task('bundle', ['copy'], function() {
   dtsBundle.bundle({
     main: 'dist/index.d.ts',
-    name: 'typed-react'
+    name: 'typed-react',
+    prefix: '',
+    removeSource: true,
+    separator: '/dist/',
   });
 });
 
@@ -57,10 +60,11 @@ gulp.task('test', ['bundle', 'spec']);
 
 gulp.task('scripts', ['clean', 'lint'], function() {
   var hasError = false;
-  var compiler = gulp.src(ts)
+  var compiler = gulp.src([ts, dts])
     .pipe(typescript({
       declarationFiles: true,
       module: 'commonjs',
+      noExternalResolve: true,
       noImplicitAny: true,
       noLib: false,
       removeComments: false,
