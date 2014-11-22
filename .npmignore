@@ -1,7 +1,9 @@
 build
 src
 test
-typings
+typings/tsd.d.ts
+typings/chai
+typings/mocha
 gulpfile.js
 .travis.yml
 tsd.json
