@@ -30,7 +30,7 @@ describe("createFactory", () => {
     var name = "test";
 
     beforeEach(() => {
-        clazz = TypedReact.createClass<FactoryProps, FactoryState>(React.createClass, FactoryTest);
+        clazz = TypedReact.createClass<FactoryProps, FactoryState>(FactoryTest);
         factory = React.createFactory(clazz);
         descriptor = factory({
             name: name
@@ -47,7 +47,7 @@ describe("createFactory", () => {
     });
 
     it("should keep inherited methods and props", () => {
-        var inheritedClazz = TypedReact.createClass<FactoryProps, FactoryState>(React.createClass, InheritanceTest);
+        var inheritedClazz = TypedReact.createClass<FactoryProps, FactoryState>(InheritanceTest);
         var inheritedFactory = React.createFactory(inheritedClazz);
         expect(React.renderToStaticMarkup(inheritedFactory({name: "Asana"}))).to.equal("<h1>Greetings, Asana</h1>");
     });
