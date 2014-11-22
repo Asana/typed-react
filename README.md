@@ -58,6 +58,38 @@ export var timer = TypedReact.createClass(Timer);
 
 In this case we export the Props and the Factory but we could make the props and state inline interfaces and just export the factory function.
 
+## Mixins
+
+TypedReact supports using existing React Mixins as well as defining new mixins with idiomatic TypeScript. The example is based on [http://www.typescriptlang.org/Handbook#mixins](http://www.typescriptlang.org/Handbook#mixins). You need to use `extractPrototype` on your own mixins and should export that from your mixin modules.
+
+```ts
+/// <reference path='../path/to/react-addons.d.ts' />
+/// <reference path='../path/to/typed-react.d.ts' />
+
+import React = require("react/addons");
+import TypedReact = require("typed-react");
+
+export interface GreeterProps {
+    name: string;
+}
+
+class GreetingMixin extends TypedReact.Mixin<GreeterProps, {}> {
+    greet(greeting: string): React.ReactDOMElement<{}> {
+        return React.DOM.h1(null, greeting, this.props.name);
+    }
+}
+
+class Greeter extends TypedReact.Component<GreeterProps, {}> implements HelperMixin {
+    greet: (greeting: string) => React.ReactDOMElement<{}>;
+
+    render() {
+        return this.greet(this.greeting);
+    }
+}
+
+export var greeter = TypedReact.createClass(Greeter, [TypedReact.extractPrototype(GreetingMixin), React.addons.PureRenderMixin]);
+```
+
 ## Changelog
 
 - `2.2` Making React a peer dependency. This means you do not need to pass `React.createClass` into `createClass`.
