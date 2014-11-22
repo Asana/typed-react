@@ -5,6 +5,7 @@ var glob = require('glob');
 var gulp = require('gulp');
 var istanbul = require('gulp-istanbul');
 var mocha = require('gulp-mocha');
+var through = require('through2');
 var tsformat = require('typescript-formatter');
 var tslint = require('gulp-tslint');
 var typescript = require('gulp-typescript');
@@ -16,6 +17,20 @@ var js = 'build/src/**/*.js';
 var spec = 'build/test/**/*_spec.js';
 var src = 'build/src/**/*';
 var ts = '{src,test}/**/*.ts';
+
+var ignoreTsExtend = function() {
+  var tsExtends = /^var __extends =/;
+  return through.obj(function(file, enc, done) {
+    if (file.isBuffer() && tsExtends.test(file.contents)) {
+      file.contents = Buffer.concat([
+        new Buffer('/* istanbul ignore next */\n'),
+        file.contents
+      ]);
+    }
+    this.push(file);
+    done();
+  });
+}
 
 gulp.task('bundle', ['copy'], function() {
   dtsBundle.bundle({
@@ -88,6 +103,7 @@ gulp.task('scripts', ['clean', 'lint'], function() {
 
 gulp.task('spec', ['scripts'], function(callback) {
   gulp.src(js)
+    .pipe(ignoreTsExtend())
     .pipe(istanbul({
       includeUntested: true
     }))
