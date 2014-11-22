@@ -1,7 +1,7 @@
 /// <reference path="../typings/mocha/mocha.d.ts" />
 import chai = require("chai");
 import TypedReact = require("../src/index");
-import React = require("react/addons");
+import React = require("react");
 
 var expect = chai.expect;
 
