@@ -12,6 +12,7 @@ var typescript = require('gulp-typescript');
 var build = 'build';
 var dist = 'dist';
 var dts = 'typings/**/*.d.ts';
+var js = 'build/src/**/*.js';
 var spec = 'build/test/**/*_spec.js';
 var src = 'build/src/**/*';
 var ts = '{src,test}/**/*.ts';
@@ -85,9 +86,32 @@ gulp.task('scripts', ['clean', 'lint'], function() {
   return eventStream.merge(dtsStream, jsStream);
 });
 
-gulp.task('spec', ['scripts'], function() {
-  return gulp.src(spec, {
-      read: false
-    })
-    .pipe(mocha());
+gulp.task('spec', ['scripts'], function(callback) {
+  gulp.src(js)
+    .pipe(istanbul({
+      includeUntested: true
+    }))
+    .on('finish', function() {
+      gulp.src(spec, {
+          read: false
+        })
+        .pipe(mocha({
+          reporter: process.env.TRAVIS ? 'spec' : 'nyan'
+        }))
+        .pipe(istanbul.writeReports({
+          reporters: ['text', 'text-summary']
+        }))
+        .on('end', function() {
+          var errOrNull = null;
+          var coverage = istanbul.summarizeCoverage();
+          var incomplete = Object.keys(coverage).filter(function(key) {
+            return coverage[key].pct !== 100;
+          });
+          if (incomplete.length > 0) {
+            errOrNull = new Error(
+              'Incomplete coverage for ' + incomplete.join(', '));
+          }
+          callback(errOrNull);
+        });
+    });
 });
