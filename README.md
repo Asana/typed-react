@@ -87,11 +87,15 @@ class Greeter extends TypedReact.Component<GreeterProps, {}> implements HelperMi
     }
 }
 
-export var greeter = TypedReact.createClass(Greeter, [TypedReact.extractPrototype(GreetingMixin), React.addons.PureRenderMixin]);
+export var greeter = TypedReact.createClass(Greeter, [
+    TypedReact.extractPrototype(GreetingMixin),
+    React.addons.PureRenderMixin
+]);
 ```
 
 ## Changelog
 
+- `3.0` Idiomatic Mixin Support
 - `2.2` Making React a peer dependency. This means you do not need to pass `React.createClass` into `createClass`.
 - `2.1` Switching to createClass
 - `2.0` React 0.12.RC
