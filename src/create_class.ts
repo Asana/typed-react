@@ -2,7 +2,7 @@
 import ComponentClass = require("./component_class");
 import React = require("react");
 
-var ILLEGAL_KEYS: {[key: string]: boolean} = {
+var ILLEGAL_KEYS: { [key: string]: boolean } = {
     constructor: true,
     refs: true,
     props: true,
