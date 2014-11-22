@@ -1,92 +1,89 @@
-var childProcess = require('child_process');
 var del = require('del');
-var dts = require('dts-bundle');
+var dtsBundle = require('dts-bundle');
+var eventStream = require('event-stream');
 var glob = require('glob');
 var gulp = require('gulp');
+var istanbul = require('gulp-istanbul');
 var mocha = require('gulp-mocha');
-var path = require('path');
+var tsformat = require('typescript-formatter');
 var tslint = require('gulp-tslint');
 var typescript = require('gulp-typescript');
 
-var dirs = {};
-dirs.build = path.join(__dirname, 'build');
-dirs.dist = path.join(__dirname, 'dist');
-dirs.js = path.join(dirs.build, 'src');
-dirs.spec = path.join(dirs.build, 'test');
-dirs.src = path.join(__dirname, 'src');
-dirs.test = path.join(__dirname, 'test');
-dirs.typings = path.join(__dirname, 'typings');
-
-var files = {};
-files.build = path.join(dirs.build, 'src', '**', '*.{d.ts,js}');
-files.dts = path.join(dirs.dist, 'index.d.ts');
-files.spec = path.join(dirs.build, 'test', '**', '*.js');
-files.ts = path.join(__dirname, '{src,test}', '**', '*.ts');
-files.typings = path.join(dirs.typings, '**', '*.d.ts');
-
-gulp.task('build', ['bundle']);
+var build = 'build';
+var dist = 'dist';
+var dts = 'typings/**/*.d.ts';
+var spec = 'build/test/**/*_spec.js';
+var src = 'build/src/**/*';
+var ts = '{src,test}/**/*.ts';
 
 gulp.task('bundle', ['copy'], function() {
-  dts.bundle({
-    name: 'typed-react',
-    main: files.dts,
-    removeSource: true
+  dtsBundle.bundle({
+    main: 'dist/index.d.ts',
+    name: 'typed-react'
   });
 });
 
 gulp.task('clean', function(callback) {
-  del([dirs.build, dirs.dist], callback);
+  del([build, dist], callback);
 });
 
-gulp.task('copy', ['test'], function() {
-  return gulp.src(files.build)
-    .pipe(gulp.dest(dirs.dist));
+gulp.task('copy', ['scripts'], function() {
+  return gulp.src(src)
+    .pipe(gulp.dest(dist));
 });
 
 gulp.task('format', function(callback) {
-  glob(files.ts, function(err, files) {
+  glob(ts, function(err, files) {
     if (err) {
       return callback(err);
     }
-    if (files.length === 0) {
-      return callback(null);
-    }
-    var command = [
-      'node_modules/.bin/tsfmt',
-      '--replace',
-      '--no-editorconfig',
-      '--no-tsfmt'
-    ].concat(files).join(' ');
-    childProcess.exec(command, callback);
+    tsformat.processFiles(files, {
+      editorconfig: false,
+      replace: true,
+      tsfmt: false,
+      tslint: true
+    });
+    return callback(null);
   });
 });
 
 gulp.task('lint', function() {
-  return gulp.src(files.ts)
+  return gulp.src(ts)
     .pipe(tslint())
-    .pipe(tslint.report('prose'));
+    .pipe(tslint.report('verbose'));
 });
 
-gulp.task('scripts', ['clean'], function() {
-  var ts = gulp.src([files.ts, files.typings])
+gulp.task('test', ['bundle', 'spec']);
+
+gulp.task('scripts', ['clean', 'lint'], function() {
+  var hasError = false;
+  var compiler = gulp.src(ts)
     .pipe(typescript({
-      removeComments: false,
+      declarationFiles: true,
+      module: 'commonjs',
       noImplicitAny: true,
       noLib: false,
-      target: 'ES5',
-      module: 'commonjs',
-      declarationFiles: true,
-      noExternalResolve: true
+      removeComments: false,
+      sortOutput: false,
+      target: 'ES5'
     }));
-  ts.dts.pipe(gulp.dest(dirs.build));
-  return ts.js.pipe(gulp.dest(dirs.build));
+  var dtsStream = compiler.dts.pipe(gulp.dest(build));
+  var jsStream = compiler.js
+    .on('error', function() {
+      hasError = true;
+    })
+    .on('end', function() {
+      if (hasError) {
+        process.exit(8);
+      }
+    })
+    .pipe(gulp.dest(build));
+  return eventStream.merge(dtsStream, jsStream);
 });
 
 gulp.task('spec', ['scripts'], function() {
-  return gulp.src(files.spec)
-    .pipe(mocha({
-      reporter: 'spec'
-    }));
+  return gulp.src(spec, {
+      read: false
+    })
+    .pipe(mocha());
 });
-
-gulp.task('test', ['lint', 'spec']);

@@ -1,3 +1,4 @@
+/// <reference path="../typings/react/react.d.ts" />
 import ComponentClass = require("./component_class");
 import React = require("react");
 
