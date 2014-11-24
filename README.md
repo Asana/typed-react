@@ -88,7 +88,7 @@ class Greeter extends TypedReact.Component<GreeterProps, {}> implements HelperMi
 }
 
 export var greeter = TypedReact.createClass(Greeter, [
-    TypedReact.extractPrototype(GreetingMixin),
+    TypedReact.createMixin(GreetingMixin),
     React.addons.PureRenderMixin
 ]);
 ```

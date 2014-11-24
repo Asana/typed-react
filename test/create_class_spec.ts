@@ -1,10 +1,7 @@
 /// <reference path="../typings/mocha/mocha.d.ts" />
 import chai = require("chai");
-import Component = require("../src/component");
-import createClass = require("../src/create_class");
-import extractPrototype = require("../src/extract_prototype");
-import Mixin = require("../src/mixin");
 import React = require("react");
+import TypedReact = require("../src/index");
 
 var assert = chai.assert;
 
@@ -16,7 +13,7 @@ interface FactoryProps {
 interface FactoryState {
 }
 
-class FactoryTest extends Component<FactoryProps, FactoryState> {
+class FactoryTest extends TypedReact.Component<FactoryProps, FactoryState> {
     greeting: string = "Greetings, ";
 
     render() {
@@ -33,13 +30,13 @@ class ComponentWillMountTest extends FactoryTest {
 class InheritanceTest extends FactoryTest {
 }
 
-class LifeCycleMixin extends Mixin<FactoryProps, FactoryState> {
+class LifeCycleMixin extends TypedReact.Mixin<FactoryProps, FactoryState> {
     componentWillMount() {
         this.props.callback();
     }
 }
 
-class HelperMixin extends Mixin<FactoryProps, FactoryState> {
+class HelperMixin extends TypedReact.Mixin<FactoryProps, FactoryState> {
     greet(greeting: string): React.ReactDOMElement<{}> {
         return React.DOM.h1(null, greeting, this.props.name);
     }
@@ -60,7 +57,7 @@ describe("createFactory", () => {
     var name = "test";
 
     beforeEach(() => {
-        clazz = createClass(FactoryTest);
+        clazz = TypedReact.createClass(FactoryTest);
         factory = React.createFactory(clazz);
         descriptor = factory({
             name: name
@@ -79,7 +76,7 @@ describe("createFactory", () => {
     });
 
     it("should keep componentWillMount code", () => {
-        var willMountClazz = createClass(ComponentWillMountTest);
+        var willMountClazz = TypedReact.createClass(ComponentWillMountTest);
         var willMountFactory = React.createFactory(willMountClazz);
         var wasCalled = false;
         assert.equal(React.renderToStaticMarkup(willMountFactory({
@@ -92,7 +89,7 @@ describe("createFactory", () => {
     });
 
     it("should keep inherited methods and props", () => {
-        var inheritedClazz = createClass(InheritanceTest);
+        var inheritedClazz = TypedReact.createClass(InheritanceTest);
         var inheritedFactory = React.createFactory(inheritedClazz);
         assert.equal(React.renderToStaticMarkup(inheritedFactory({
             name: "Asana"
@@ -100,7 +97,9 @@ describe("createFactory", () => {
     });
 
     it("should handle life cycle mixins", () => {
-        var willMountClazz = createClass(ComponentWillMountTest, [extractPrototype(LifeCycleMixin)]);
+        var willMountClazz = TypedReact.createClass(ComponentWillMountTest, [
+            TypedReact.createMixin(LifeCycleMixin)
+        ]);
         var willMountFactory = React.createFactory(willMountClazz);
         var callCount = 0;
         assert.equal(React.renderToStaticMarkup(willMountFactory({
@@ -113,7 +112,9 @@ describe("createFactory", () => {
     });
 
     it("should handle normal mixins", () => {
-        var mixinClazz = createClass(MixinTest, [extractPrototype(HelperMixin)]);
+        var mixinClazz = TypedReact.createClass(MixinTest, [
+            TypedReact.createMixin(HelperMixin)
+        ]);
         var mixinFactory = React.createFactory(mixinClazz);
         assert.equal(React.renderToStaticMarkup(mixinFactory({
             name: "Asana"
