@@ -36,9 +36,7 @@ gulp.task('bundle', ['copy'], function() {
   dtsBundle.bundle({
     main: 'dist/index.d.ts',
     name: 'typed-react',
-    prefix: '',
-    removeSource: true,
-    separator: '/dist/',
+    removeSource: true
   });
 });
 

@@ -1,15 +1,14 @@
 /// <reference path="../typings/mocha/mocha.d.ts" />
 import chai = require("chai");
-import Component = require("../src/component");
-import NotImplementedError = require("../src/not_implemented_error");
+import TypedReact = require("../src/index");
 
 var assert = chai.assert;
 
 describe("Component", () => {
-    var component: Component<any, any>;
+    var component: TypedReact.Component<any, any>;
 
     beforeEach(() => {
-        component = new Component<any, any>();
+        component = new TypedReact.Component<any, any>();
     });
 
     it("should not have refs", () => {
@@ -26,7 +25,7 @@ describe("Component", () => {
 
     var testNotImplemented = (methodName: string, fn: () => void): void => {
         it("should throw for " + methodName, () => {
-            assert.throws(fn, NotImplementedError, methodName + " should be implemented by React");
+            assert.throws(fn, TypedReact.NotImplementedError, methodName + " should be implemented by React");
         });
     };
 
