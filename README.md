@@ -95,12 +95,13 @@ export var greeter = TypedReact.createClass(Greeter, [
 
 ## Changelog
 
-- `3.0` Idiomatic Mixin Support
-- `2.2` Making React a peer dependency. This means you do not need to pass `React.createClass` into `createClass`.
-- `2.1` Switching to createClass
-- `2.0` React 0.12.RC
-- `1.4` Removed incorrect mixin support
-- `1.3` Mixins
+- **3.1** `extractPrototype` is now `createMixin`
+- **3.0** Idiomatic Mixin Support
+- **2.2** Making React a peer dependency. This means you do not need to pass `React.createClass` into `createClass`.
+- **2.1** Switching to createClass
+- **2.0** React 0.12.RC
+- **1.4** Removed incorrect mixin support
+- **1.3** Mixins
 
 ## Development Setup
 
