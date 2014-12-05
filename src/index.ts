@@ -12,7 +12,7 @@ export class NotImplementedError implements Error {
 
 export class Mixin<P, S> implements React.Mixin<P, S> {
     public refs: {
-        [key: string]: React.DomReferencer
+        [key: string]: React.Component<any>
     };
     public props: P;
     public state: S;
@@ -46,8 +46,8 @@ export class Mixin<P, S> implements React.Mixin<P, S> {
     }
 }
 
-export class Component<P, S> extends Mixin<P, S> implements React.Specification<P, S>, React.Component<P, S> {
-    render(): React.ReactElement<any, any> {
+export class Component<P, S> extends Mixin<P, S> implements React.CompositeComponent<P, S> {
+    render(): React.ReactElement<any> {
         return null;
     }
 }
@@ -76,12 +76,12 @@ function extractPrototype<T>(clazz: { new (): T }): T {
     return proto;
 }
 
-export function createMixin<P, S>(clazz: {new(): Mixin<P, S>}): React.Mixin<P, S> {
+export function createMixin<P, S>(clazz: { new(): Mixin<P, S> }): React.Mixin<P, S> {
     return extractPrototype(clazz);
 }
 
-export function createClass<P, S>(clazz: { new(): Component<P, S>}, mixins?: React.Mixin<P, S>[]): React.ReactComponentFactory<P> {
-    var spec: React.Specification<P, S> = extractPrototype(clazz);
+export function createClass<P, S>(clazz: { new(): Component<P, S> }, mixins?: React.Mixin<P, S>[]): React.ComponentClass<P> {
+    var spec: React.ComponentSpec<P, S> = extractPrototype(clazz);
     spec.displayName = clazz.prototype.constructor.name;
     if (spec.componentWillMount !== undefined) {
         var componentWillMount = spec.componentWillMount;
