@@ -63,7 +63,7 @@ In this case we export the Props and the Factory but we could make the props and
 TypedReact supports using existing React Mixins as well as defining new mixins with idiomatic TypeScript. The example is based on [http://www.typescriptlang.org/Handbook#mixins](http://www.typescriptlang.org/Handbook#mixins). You need to use `extractPrototype` on your own mixins and should export that from your mixin modules.
 
 ```ts
-/// <reference path='../path/to/react-addons.d.ts' />
+/// <reference path='../path/to/react.d.ts' />
 /// <reference path='../path/to/typed-react.d.ts' />
 
 import React = require("react/addons");
@@ -74,13 +74,13 @@ export interface GreeterProps {
 }
 
 class GreetingMixin extends TypedReact.Mixin<GreeterProps, {}> {
-    greet(greeting: string): React.ReactDOMElement<{}> {
+    greet(greeting: string): React.ReactHTMLElement {
         return React.DOM.h1(null, greeting, this.props.name);
     }
 }
 
-class Greeter extends TypedReact.Component<GreeterProps, {}> implements HelperMixin {
-    greet: (greeting: string) => React.ReactDOMElement<{}>;
+class Greeter extends TypedReact.Component<GreeterProps, {}> implements GreetingMixin {
+    greet: (greeting: string) => React.ReactHTMLElement;
 
     render() {
         return this.greet(this.greeting);
@@ -95,6 +95,7 @@ export var greeter = TypedReact.createClass(Greeter, [
 
 ## Changelog
 
+- **3.2** Update with new `react.d.ts` typings
 - **3.1** `extractPrototype` is now `createMixin`
 - **3.0** Idiomatic Mixin Support
 - **2.2** Making React a peer dependency. This means you do not need to pass `React.createClass` into `createClass`.
