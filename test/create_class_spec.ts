@@ -37,13 +37,13 @@ class LifeCycleMixin extends TypedReact.Mixin<FactoryProps, FactoryState> {
 }
 
 class HelperMixin extends TypedReact.Mixin<FactoryProps, FactoryState> {
-    greet(greeting: string): React.ReactDOMElement<{}> {
+    greet(greeting: string): React.ReactHTMLElement {
         return React.DOM.h1(null, greeting, this.props.name);
     }
 }
 
 class MixinTest extends FactoryTest implements HelperMixin {
-    greet: (greeting: string) => React.ReactDOMElement<{}>;
+    greet: (greeting: string) => React.ReactHTMLElement;
 
     render() {
         return this.greet(this.greeting);
@@ -51,22 +51,22 @@ class MixinTest extends FactoryTest implements HelperMixin {
 }
 
 describe("createFactory", () => {
-    var clazz: React.ReactComponentFactory<FactoryProps>;
-    var factory: React.ReactComponentFactory<FactoryProps>;
-    var descriptor: React.ReactComponentElement<FactoryProps>;
+    var clazz: React.ComponentClass<FactoryProps>;
+    var factory: React.ComponentFactory<FactoryProps>;
+    var element: React.ComponentElement<FactoryProps>;
     var name = "test";
 
     beforeEach(() => {
         clazz = TypedReact.createClass(FactoryTest);
-        factory = React.createFactory(clazz);
-        descriptor = factory({
+        factory = React.createFactory<FactoryProps>(clazz);
+        element = factory({
             name: name
         });
     });
 
-    it("should produce a valid descriptor", () => {
-        assert.isTrue(React.isValidElement(descriptor));
-        assert.equal(descriptor.props.name, name);
+    it("should produce a valid element", () => {
+        assert.isTrue(React.isValidElement(element));
+        assert.equal(element.props.name, name);
     });
 
     it("should keep class properties", () => {
