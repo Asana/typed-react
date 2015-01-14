@@ -661,8 +661,8 @@ declare module React {
         childFactory?: (child: ReactElement<any>) => ReactElement<any>;
     }
 
-    interface CSSTransitionGroup extends ComponentClass<CSSTransitionGroupProps> {}
-    interface TransitionGroup extends ComponentClass<TransitionGroupProps> {}
+    interface CSSTransitionGroup extends Factory<CSSTransitionGroupProps> {}
+    interface TransitionGroup extends Factory<TransitionGroupProps> {}
 
     //
     // React.addons (Mixins)
