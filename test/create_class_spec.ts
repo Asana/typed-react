@@ -53,7 +53,7 @@ class MixinTest extends FactoryTest implements HelperMixin {
 describe("createFactory", () => {
     var clazz: React.ComponentClass<FactoryProps>;
     var factory: React.ComponentFactory<FactoryProps>;
-    var element: React.ComponentElement<FactoryProps>;
+    var element: React.ReactElement<FactoryProps>;
     var name = "test";
 
     beforeEach(() => {
