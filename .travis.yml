@@ -1,11 +1,29 @@
 after_success:
-- npm run covergae
+- npm run coverage
+after_deploy:
+- git config --global user.email "git@asana.com"
+- git config --global user.name "Asana"
+- npm run doc
+before_deploy:
+- npm run bundle
 before_script:
 - npm run typings
 cache:
   directories:
   - node_modules
   - typings
+deploy:
+  provider: npm
+  email: pspeter333@gmail.com
+  skip_cleanup: true
+  api_key:
+    secure: bgLRiofeBDHPjtWINn/J87Zz9+hNMjfhSy2bmzPNdkp3WwSYiCQD4/FbhIx717OkHvUj/KkK2CHJkzMoIa4/n9y0t8DzD+YAIYPKdvCPaXvW9pueCFydKddoIxGgYpNURu9+N2JV6pLsCzUQO4qMaFaiMJfMC+iYWmrUdaQvmog=
+  on:
+    tags: true
+    repo: Asana/typed-react
+env:
+  global:
+    secure: d7CTjWUzh9E5JQELB9OqqC9DLaC2TfgwlTeHN2HhlmCMpva8KgV6QdLNtLNp2WRAvcuFYQITJCASRckhaUXD9HfE/PVjCLRoeIflQwNddfGedVI89xPpY7BQqQGSdRWXpvgaHGETovty75MWBT+5H0ju7oxJt+wKkz+Lj/NC2ks=
 language: node_js
 node_js:
 - '0.12'

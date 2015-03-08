@@ -8,8 +8,10 @@
     "*.d.ts"
   ],
   "scripts": {
+    "bundle": "gulp bundle",
     "coverage": "cat ./coverage/lcov.info | coveralls",
-    "test": "node_modules/.bin/gulp test",
+    "doc": "gulp doc",
+    "test": "gulp test",
     "typings": "tsd reinstall && tsd rebundle"
   },
   "repository": {
