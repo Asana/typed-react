@@ -76,6 +76,7 @@ register(Task.clean, [], (callback) => {
  */
 register(Task.copy, [Task.scripts], () => {
     return gulp.src(path.join(dirs.build, dirs.src, match(set(".d.ts", ".js"))))
+        .pipe(replace("/// <reference path=\"../typings/react/react.d.ts\" />", ""))
         .pipe(gulp.dest(dirs.cwd));
 });
 

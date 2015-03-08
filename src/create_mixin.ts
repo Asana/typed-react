@@ -1,3 +1,4 @@
+/// <reference path="../typings/react/react.d.ts"/>
 import extractPrototype = require("./extract_prototype");
 import Mixin = require("./mixin");
 
