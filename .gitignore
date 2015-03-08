@@ -32,5 +32,10 @@ node_modules
 *.iml
 
 # Build artifacts
-build
-dist
+_build
+*.js
+*.d.ts
+
+# TypeScript Configuration
+tsconfig.json
+typings
