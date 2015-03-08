@@ -33,6 +33,7 @@ node_modules
 
 # Build artifacts
 _build
+doc
 *.js
 *.d.ts
 

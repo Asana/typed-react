@@ -1,3 +1,4 @@
+/// <reference path="../typings/react/react.d.ts"/>
 import NotImplementedError = require("./not_implemented_error");
 
 class Mixin<P, S> implements React.Mixin<P, S> {
