@@ -1,14 +1,12 @@
+after_success:
+- npm run covergae
+before_script:
+- npm run typings
 cache:
   directories:
   - node_modules
+  - typings
 language: node_js
 node_js:
-- '0.10'
-deploy:
-  provider: npm
-  email: pspeter333@gmail.com
-  api_key:
-    secure: T0kXv9mRHUo5d9QezoIR56QOcGZgu/4W+n4MustevoIVqOCuRn6gz7MGFg61/6WKdBg473+VK9WFZxnTNNrEVWbZFAIWCna68wjlBwGvX4zLw6MVrI6vofNrCnMmh+FkyF6Vpo6Dxr/VMZ7cde5Jr2AhH4Q/hYZTzq0uu/6bGnM=
-  on:
-    repo: Asana/typed-react
-    branch: master
+- '0.12'
+sudo: false

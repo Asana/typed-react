@@ -1,18 +1,60 @@
 {
   "version": "v4",
-  "repo": "borisyankov/DefinitelyTyped",
+  "repo": "Asana/DefinitelyTyped",
   "ref": "master",
   "path": "typings",
   "bundle": "typings/tsd.d.ts",
   "installed": {
-    "react/react.d.ts": {
-      "commit": "b8a0461280813b69bb1ab15cb87f7231794ee846"
+    "chai/chai.d.ts": {
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+    },
+    "del/del.d.ts": {
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+    },
+    "dts-bundle/dts-bundle.d.ts": {
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+    },
+    "glob/glob.d.ts": {
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+    },
+    "gulp-gh-pages/gulp-gh-pages.d.ts": {
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+    },
+    "gulp-istanbul/gulp-istanbul.d.ts": {
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+    },
+    "gulp-mocha/gulp-mocha.d.ts": {
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+    },
+    "gulp-replace/gulp-replace.d.ts": {
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+    },
+    "gulp-tslint/gulp-tslint.d.ts": {
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+    },
+    "gulp-typescript/gulp-typescript.d.ts": {
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+    },
+    "gulp/gulp.d.ts": {
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+    },
+    "gulp-typedoc/gulp-typedoc.d.ts": {
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+    },
+    "minimatch/minimatch.d.ts": {
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
     },
     "mocha/mocha.d.ts": {
-      "commit": "b6970132c4ddf4b0ffe7952e9e3b08e23f96ea8f"
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
     },
-    "chai/chai.d.ts": {
-      "commit": "b6970132c4ddf4b0ffe7952e9e3b08e23f96ea8f"
+    "node/node.d.ts": {
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+    },
+    "react/react.d.ts": {
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+    },
+    "vinyl/vinyl.d.ts": {
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
     }
   }
 }

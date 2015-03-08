@@ -1,12 +1,9 @@
-build
+_build
 src
 test
-typings/tsd.d.ts
-typings/chai
-typings/mocha
-gulpfile.js
+typings
+gulpfile.ts
+.editorconfig
 .travis.yml
 tsd.json
 tslint.json
-*.iml
-.idea
