@@ -1,6 +1,6 @@
 {
   "name": "typed-react",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "description": "A binding layer between React and TypeScript",
   "main": "index.js",
   "files": [
