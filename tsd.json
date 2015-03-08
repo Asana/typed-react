@@ -14,6 +14,9 @@
     "dts-bundle/dts-bundle.d.ts": {
       "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
     },
+    "glob/glob.d.ts": {
+      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+    },
     "gulp-gh-pages/gulp-gh-pages.d.ts": {
       "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
     },
