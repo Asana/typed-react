@@ -1,6 +1,10 @@
-# Typed React [![build status](http://img.shields.io/travis/Asana/typed-react.svg?style=flat-square)](https://travis-ci.org/Asana/typed-react)
+# Typed React [![NPM Version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage][coveralls-image]][coveralls-url]
 
 A binding layer between React and TypeScript. React currently uses a `createClass` function which takes in a component specification and then binds the value of `this`. Unfortunately TypeScript does not support that currently but there are several proposals to do that in the future. React moving to a world which supports ES6 classes will also make this unnecessary. In the meantime, this library quite simple provides a class to extend and factory function to convert the prototype for `createClass`.
+
+This library will change dramatically with the release of React 0.13. The goal
+will be to provide traditional React semantics, such as Mixins with the new
+ES6 style classes.
 
 ## Installation
 
@@ -95,6 +99,7 @@ export var greeter = TypedReact.createClass(Greeter, [
 
 ## Changelog
 
+- **3.3** Updating the React type definitions and moving the location of the type definition
 - **3.2** Update with new `react.d.ts` typings
 - **3.1** `extractPrototype` is now `createMixin`
 - **3.0** Idiomatic Mixin Support
@@ -107,10 +112,18 @@ export var greeter = TypedReact.createClass(Greeter, [
 ## Development Setup
 
 ```sh
-npm install -g gulp
-npm install -g tsd
 git clone git@github.com:Asana/typed-react.git
 cd typed-react
 npm install
-tsd reinstall --overwrite --save
+npm run typings
+npm test
 ```
+
+[npm-url]: https://www.npmjs.org/package/typed-react
+[npm-image]: http://img.shields.io/npm/v/typed-react.svg?style=flat-square
+
+[travis-url]: http://travis-ci.org/Asana/Asana/typed-react
+[travis-image]: http://img.shields.io/travis/Asana/typed-react/master.svg?style=flat-square
+
+[coveralls-url]: https://coveralls.io/r/Asana/typed-react
+[coveralls-image]: https://img.shields.io/coveralls/Asana/typed-react/master.svg?style=flat-square
