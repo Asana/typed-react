@@ -76,7 +76,7 @@ register(Task.clean, [], (callback) => {
  */
 register(Task.copy, [Task.scripts], () => {
     return gulp.src(path.join(dirs.build, dirs.src, match(set(".d.ts", ".js"))))
-        .pipe(replace("/// <reference path=\"../typings/react/react.d.ts\" />", ""))
+        .pipe(replace("<reference path=\"../", "<reference path=\"./"))
         .pipe(gulp.dest(dirs.cwd));
 });
 
@@ -120,6 +120,7 @@ register(Task.scripts, [Task.clean], (callback) => {
           sortOutput: false,
           target: "ES5"
       }));
+
     drain(compiler.js);
     drain(compiler.dts);
     function drain(stream: NodeJS.ReadWriteStream): void {

@@ -1,18 +1,20 @@
 /// <reference path="../typings/react/react.d.ts"/>
 import NotImplementedError = require("./not_implemented_error");
+import react = require("react");
 
-class Mixin<P, S> implements React.Mixin<P, S> {
+class Mixin<P, S> implements react.Mixin<P, S> {
     public refs: {
-        [key: string]: React.Component<any>
+        [key: string]: react.Component<any, any>
     };
     public props: P;
     public state: S;
+    public context: any;
 
     getDOMNode(): Element {
         throw new NotImplementedError("getDomNode");
     }
 
-    setState(nextState: S, callback?: () => void): void {
+    setState(nextState: S | ((prevState: S, props: P) => S), callback?: () => void): void {
         throw new NotImplementedError("setState");
     }
 

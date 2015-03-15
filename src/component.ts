@@ -1,8 +1,10 @@
 /// <reference path="../typings/react/react.d.ts"/>
-import Mixin = require("././mixin");
 
-class Component<P, S> extends Mixin<P, S> implements React.CompositeComponent<P, S> {
-    render(): React.ReactElement<any> {
+import Mixin = require("././mixin");
+import react = require("react");
+
+class Component<P, S> extends Mixin<P, S> implements react.ClassicComponent<P, S> {
+    render(): react.ReactElement<any> {
         return null;
     }
 }
