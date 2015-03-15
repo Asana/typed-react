@@ -1,8 +1,9 @@
 /// <reference path="../typings/react/react.d.ts"/>
 import extractPrototype = require("./extract_prototype");
 import Mixin = require("./mixin");
+import react = require("react");
 
-function createMixin<P, S>(clazz: { new(): Mixin<P, S> }): React.Mixin<P, S> {
+function createMixin<P, S>(clazz: { new(): Mixin<P, S> }): react.Mixin<P, S> {
     return extractPrototype(clazz);
 }
 

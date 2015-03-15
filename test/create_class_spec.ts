@@ -1,4 +1,6 @@
 /// <reference path="../typings/mocha/mocha.d.ts" />
+/// <reference path="../typings/react/react.d.ts" />
+
 import chai = require("chai");
 import React = require("react");
 import TypedReact = require("../src/index");
@@ -37,13 +39,13 @@ class LifeCycleMixin extends TypedReact.Mixin<FactoryProps, FactoryState> {
 }
 
 class HelperMixin extends TypedReact.Mixin<FactoryProps, FactoryState> {
-    greet(greeting: string): React.ReactHTMLElement {
+    greet(greeting: string): React.HTMLElement {
         return React.DOM.h1(null, greeting, this.props.name);
     }
 }
 
 class MixinTest extends FactoryTest implements HelperMixin {
-    greet: (greeting: string) => React.ReactHTMLElement;
+    greet: (greeting: string) => React.HTMLElement;
 
     render() {
         return this.greet(this.greeting);
@@ -52,7 +54,7 @@ class MixinTest extends FactoryTest implements HelperMixin {
 
 describe("createFactory", () => {
     var clazz: React.ComponentClass<FactoryProps>;
-    var factory: React.ComponentFactory<FactoryProps>;
+    var factory: React.Factory<FactoryProps>;
     var element: React.ReactElement<FactoryProps>;
     var name = "test";
 
