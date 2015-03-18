@@ -2,16 +2,18 @@
 root = true
 
 [*]
+charset = utf-8
 indent_size = 2
-max_line_length = 80
+indent_style = space
 trim_trailing_whitespace = true
 insert_final_newline = true
-
-[*.ts]
-indent_size = 4
-indent_style = space
-max_line_length = 140
+max_line_length = 80
 quote_type = double
 
 [*.md]
 trim_trailing_whitespace = false
+
+[*.ts]
+indent_size = 4
+max_line_length = 140
+continuation_indent_size = 4
