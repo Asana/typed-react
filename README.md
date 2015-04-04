@@ -124,7 +124,7 @@ npm test
 [npm-url]: https://www.npmjs.org/package/typed-react
 [npm-image]: http://img.shields.io/npm/v/typed-react.svg?style=flat-square
 
-[travis-url]: http://travis-ci.org/Asana/Asana/typed-react
+[travis-url]: http://travis-ci.org/Asana/typed-react
 [travis-image]: http://img.shields.io/travis/Asana/typed-react/master.svg?style=flat-square
 
 [coveralls-url]: https://coveralls.io/r/Asana/typed-react
