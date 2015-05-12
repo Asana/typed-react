@@ -1,21 +1,21 @@
 {
   "version": "v4",
-  "repo": "borisyankov/DefinitelyTyped",
+  "repo": "Asana/DefinitelyTyped",
   "ref": "master",
   "path": "typings",
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "chai/chai.d.ts": {
-      "commit": "846a250e0a6f5e6adf6347ee4ca442a9d1abd8fc"
+      "commit": "66d8808c98856feae7d5a2d5acfc955110fb126d"
     },
     "mocha/mocha.d.ts": {
-      "commit": "846a250e0a6f5e6adf6347ee4ca442a9d1abd8fc"
+      "commit": "66d8808c98856feae7d5a2d5acfc955110fb126d"
     },
     "node/node.d.ts": {
-      "commit": "846a250e0a6f5e6adf6347ee4ca442a9d1abd8fc"
+      "commit": "66d8808c98856feae7d5a2d5acfc955110fb126d"
     },
     "sinon/sinon.d.ts": {
-      "commit": "846a250e0a6f5e6adf6347ee4ca442a9d1abd8fc"
+      "commit": "66d8808c98856feae7d5a2d5acfc955110fb126d"
     }
   }
 }
