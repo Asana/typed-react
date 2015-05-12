@@ -6,8 +6,10 @@
   "scripts": {
     "clean": "rm -rf build coverage",
     "precompile": "npm run clean",
-    "compile": "find src test typings -name \"*.ts\" | xargs tsc --declaration --module commonjs --target es5 --noImplicitAny --outDir build",
-    "pretest": "npm run compile",
+    "compile": "find src test tools typings -name \"*.ts\" | xargs tsc --declaration --module commonjs --target es5 --noImplicitAny --outDir build",
+    "prelint": "npm run compile",
+    "lint": "find src test tools -name \"*.ts\" | sed 's/^/--file=/g' | xargs tslint --rules-dir build/tools/rules",
+    "pretest": "npm run lint",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,6 +26,7 @@
   },
   "homepage": "https://github.com/Asana/typescript-starter",
   "devDependencies": {
+    "tslint": "^2.1.1",
     "typescript": "^1.4.1"
   }
 }
