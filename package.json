@@ -1,0 +1,22 @@
+{
+  "name": "typescript-starter",
+  "version": "0.0.1",
+  "description": "A starter project for TypeScript libraries",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Asana/typescript-starter.git"
+  },
+  "keywords": [
+    "typescript"
+  ],
+  "author": "Asana",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Asana/typescript-starter/issues"
+  },
+  "homepage": "https://github.com/Asana/typescript-starter"
+}
