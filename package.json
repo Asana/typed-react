@@ -4,6 +4,10 @@
   "description": "A starter project for TypeScript libraries",
   "main": "index.js",
   "scripts": {
+    "clean": "rm -rf build coverage",
+    "precompile": "npm run clean",
+    "compile": "find src test typings -name \"*.ts\" | xargs tsc --declaration --module commonjs --target es5 --noImplicitAny --outDir build",
+    "pretest": "npm run compile",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/Asana/typescript-starter/issues"
   },
-  "homepage": "https://github.com/Asana/typescript-starter"
+  "homepage": "https://github.com/Asana/typescript-starter",
+  "devDependencies": {
+    "typescript": "^1.4.1"
+  }
 }
