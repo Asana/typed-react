@@ -16,9 +16,9 @@
     "clean": "rm -rf build coverage *.js *.d.ts",
     "precompile": "npm run clean",
     "compile": "find src test typings -name \"*.ts\" | xargs tsc --declaration --module commonjs --target es5 --noImplicitAny --outDir build",
-    "prelint": "npm run compile",
+    "prelint": "npm run compile -- --sourceMap",
     "lint": "find src test -name \"*.ts\" | sed 's/^/--file=/g' | xargs tslint",
-    "pretest": "npm run lint",
+    "pretest": "npm run lint && find build -type f -name *.js -exec sed -i .bak -e '1s/^/require(\"source-map-support\").install();/' {} \\;",
     "test": "mocha --reporter ${MOCHA_REPORTER-nyan} --slow 10 --ui tdd --recursive build/**/*_test.js",
     "typings": "tsd reinstall && tsd rebundle"
   },
@@ -40,6 +40,7 @@
     "dts-generator": "^1.4.1",
     "mocha": "^2.2.4",
     "sinon": "^1.14.1",
+    "source-map-support": "^0.2.10",
     "tsd": "^0.6.0-beta.5",
     "tslint": "^2.1.1",
     "typescript": "^1.4.1"
