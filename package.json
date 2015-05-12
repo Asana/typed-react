@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/Asana/typescript-starter",
   "devDependencies": {
+    "tsd": "^0.6.0-beta.5",
     "tslint": "^2.1.1",
     "typescript": "^1.4.1"
   }
