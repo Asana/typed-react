@@ -3,12 +3,21 @@
   "version": "0.0.1",
   "description": "A starter project for TypeScript libraries",
   "main": "index.js",
+  "files": [
+    "typescript-starter.d.ts",
+    "**/*.js",
+    "!build/**/*.js",
+    "!coverage/**/*.js",
+    "!node_modules/**/*.js"
+  ],
   "scripts": {
-    "clean": "rm -rf build coverage",
+    "prebundle": "npm run compile && mv build/src/** .",
+    "bundle": "dts-generator --name $npm_package_name --main index.d.ts --baseDir . --exclude node_modules/dts-generator/node_modules/typescript/bin/lib.es6.d.ts -out ${npm_package_name}.d.ts *.d.ts",
+    "clean": "rm -rf build coverage *.js *.d.ts",
     "precompile": "npm run clean",
-    "compile": "find src test tools typings -name \"*.ts\" | xargs tsc --declaration --module commonjs --target es5 --noImplicitAny --outDir build",
+    "compile": "find src test typings -name \"*.ts\" | xargs tsc --declaration --module commonjs --target es5 --noImplicitAny --outDir build",
     "prelint": "npm run compile",
-    "lint": "find src test tools -name \"*.ts\" | sed 's/^/--file=/g' | xargs tslint --rules-dir build/tools/rules",
+    "lint": "find src test -name \"*.ts\" | sed 's/^/--file=/g' | xargs tslint",
     "pretest": "npm run lint",
     "test": "mocha --reporter ${MOCHA_REPORTER-nyan} --slow 10 --ui tdd --recursive build/**/*_test.js",
     "typings": "tsd reinstall && tsd rebundle"
@@ -28,10 +37,14 @@
   "homepage": "https://github.com/Asana/typescript-starter",
   "devDependencies": {
     "chai": "^2.3.0",
+    "dts-generator": "^1.4.1",
     "mocha": "^2.2.4",
     "sinon": "^1.14.1",
     "tsd": "^0.6.0-beta.5",
     "tslint": "^2.1.1",
     "typescript": "^1.4.1"
+  },
+  "typescript": {
+    "definition": "typescript-starter.d.ts"
   }
 }
