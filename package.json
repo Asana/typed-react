@@ -16,6 +16,7 @@
     "clean": "rm -rf build coverage *.js *.d.ts",
     "precompile": "npm run clean",
     "compile": "find src test typings -name \"*.ts\" | xargs tsc --declaration --module commonjs --target es5 --noImplicitAny --outDir build",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
     "prelint": "npm run compile -- --sourceMap",
     "lint": "find src test -name \"*.ts\" | sed 's/^/--file=/g' | xargs tslint",
     "pretest": "npm run lint && find build -type f -name *.js -exec sed -i .bak -e '1s/^var __extends/\\/\\* istanbul ignore next \\*\\/\rvar __extends/; 1s/^/require(\"source-map-support\").install();\r/' {} \\;",
@@ -38,6 +39,7 @@
   "homepage": "https://github.com/Asana/typescript-starter",
   "devDependencies": {
     "chai": "^2.3.0",
+    "coveralls": "^2.11.2",
     "dts-generator": "^1.4.1",
     "istanbul": "^0.3.14",
     "mocha": "^2.2.4",
