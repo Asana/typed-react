@@ -5,4 +5,14 @@ suite("Index", () => {
     test("name", () => {
         chai.assert.equal(index.name, "typescript-starter");
     });
+
+    test("parent", () => {
+        chai.assert.instanceOf(new index.Parent(), index.Parent);
+    });
+
+    test("child", () => {
+        var child = new index.Child();
+        chai.assert.instanceOf(child, index.Parent);
+        chai.assert.instanceOf(child, index.Child);
+    });
 });
