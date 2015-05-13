@@ -1,0 +1,25 @@
+# Cache node_modules and typings for future runs. This does make the builds
+# sometimes fail because of a bad cache but usually this is a huge test
+# performance win.
+cache:
+  directories:
+    - node_modules
+    - typings
+# Set up environment variables for tests
+env:
+  global:
+    # Use a better mocha reporter for Travis
+    - MOCHA_REPORTER=spec
+# Use the Travis Docker build system which is faster
+sudo: false
+# Specify to use node
+language: node_js
+# Specify the node versions to run on
+node_js:
+  - "0.12"
+# Make sure to have typings before the test
+before_script:
+  - npm run typings
+# Make sure to bundle the application before any deploys
+before_deploy:
+  - npm run bundle
