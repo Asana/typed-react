@@ -6,6 +6,7 @@
   "files": [
     "typescript-starter.d.ts",
     "**/*.js",
+    "!**/*_test.js",
     "!build/**/*.js",
     "!coverage/**/*.js",
     "!node_modules/**/*.js"
