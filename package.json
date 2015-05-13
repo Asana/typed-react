@@ -18,8 +18,9 @@
     "compile": "find src test typings -name \"*.ts\" | xargs tsc --declaration --module commonjs --target es5 --noImplicitAny --outDir build",
     "prelint": "npm run compile -- --sourceMap",
     "lint": "find src test -name \"*.ts\" | sed 's/^/--file=/g' | xargs tslint",
-    "pretest": "npm run lint && find build -type f -name *.js -exec sed -i .bak -e '1s/^/require(\"source-map-support\").install();/' {} \\;",
-    "test": "mocha --reporter ${MOCHA_REPORTER-nyan} --slow 10 --ui tdd --recursive build/**/*_test.js",
+    "pretest": "npm run lint && find build -type f -name *.js -exec sed -i .bak -e '1s/^var __extends/\\/\\* istanbul ignore next \\*\\/\rvar __extends/; 1s/^/require(\"source-map-support\").install();\r/' {} \\;",
+    "test": "istanbul cover _mocha -- --reporter ${MOCHA_REPORTER-nyan} --slow 10 --ui tdd --recursive build/**/*_test.js",
+    "posttest": "istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "typings": "tsd reinstall && tsd rebundle"
   },
   "repository": {
@@ -38,6 +39,7 @@
   "devDependencies": {
     "chai": "^2.3.0",
     "dts-generator": "^1.4.1",
+    "istanbul": "^0.3.14",
     "mocha": "^2.2.4",
     "sinon": "^1.14.1",
     "source-map-support": "^0.2.10",
