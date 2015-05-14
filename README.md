@@ -8,8 +8,6 @@ This library will change dramatically with the release of React 0.13. The goal
 will be to provide traditional React semantics, such as Mixins with the new
 ES6 style classes.
 
-The documentation can be found at [http://asana.github.io/typed-react/](http://asana.github.io/typed-react/). 
-
 ## Installation
 
 ```sh
