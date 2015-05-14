@@ -1,4 +1,3 @@
-/// <reference path="../typings/react/react.d.ts"/>
 import NotImplementedError = require("./not_implemented_error");
 import react = require("react");
 

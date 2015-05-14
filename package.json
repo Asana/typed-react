@@ -4,14 +4,25 @@
   "description": "A binding layer between React and TypeScript",
   "main": "index.js",
   "files": [
-    "*.js",
-    "*.d.ts"
+    "typed-react.d.ts",
+    "**/*.js",
+    "!**/*_test.js",
+    "!build/**/*.js",
+    "!coverage/**/*.js",
+    "!node_modules/**/*.js"
   ],
   "scripts": {
-    "bundle": "gulp bundle",
-    "coverage": "cat ./coverage/lcov.info | coveralls",
-    "doc": "gulp doc",
-    "test": "gulp test",
+    "prebundle": "npm run compile && mv build/src/** .",
+    "bundle": "dts-generator --name $npm_package_name --main index.d.ts --baseDir . --exclude node_modules/dts-generator/node_modules/typescript/bin/lib.es6.d.ts -out ${npm_package_name}.d.ts *.d.ts",
+    "clean": "rm -rf build coverage *.js *.d.ts",
+    "precompile": "npm run clean",
+    "compile": "find src test typings -name \"*.ts\" | xargs tsc --declaration --module commonjs --target es5 --noImplicitAny --outDir build",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "prelint": "npm run compile -- --sourceMap",
+    "lint": "find src test -name \"*.ts\" | sed 's/^/--file=/g' | xargs tslint",
+    "pretest": "npm run lint && find build -type f -name *.js -exec sed -i .bak -e '1s/^var __extends/\\/\\* istanbul ignore next \\*\\/\rvar __extends/; 1s/^/require(\"source-map-support\").install();\r/' {} \\;",
+    "test": "istanbul cover _mocha -- --reporter ${MOCHA_REPORTER-nyan} --slow 10 --ui tdd --recursive build/**/*_test.js",
+    "posttest": "istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "typings": "tsd reinstall && tsd rebundle"
   },
   "repository": {
@@ -32,22 +43,16 @@
     "react": ">=0.12"
   },
   "devDependencies": {
-    "chai": "^2.1.1",
+    "chai": "^2.3.0",
     "coveralls": "^2.11.2",
-    "del": "^1.1.1",
-    "dts-bundle": "^0.2.0",
-    "event-stream": "^3.1.7",
-    "gulp": "^3.8.8",
-    "gulp-gh-pages": "^0.4.0",
-    "gulp-istanbul": "^0.6.0",
-    "gulp-mocha": "^2.0.0",
-    "gulp-replace": "^0.5.0",
-    "gulp-tslint": "^1.3.0",
-    "gulp-typedoc": "^1.1.0",
-    "gulp-typescript": "^2.1.0",
-    "react": "^0.13.0",
+    "dts-generator": "^1.4.1",
+    "istanbul": "^0.3.14",
+    "mocha": "^2.2.4",
+    "sinon": "^1.14.1",
+    "source-map-support": "^0.2.10",
     "tsd": "^0.6.0-beta.5",
-    "typescript-require": "https://github.com/pspeter3/typescript-require/releases/download/v1.0.6/typescript-require-1.0.6.tgz"
+    "tslint": "^2.1.1",
+    "typescript": "^1.4.1"
   },
   "typescript": {
     "definition": "typed-react.d.ts"

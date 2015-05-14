@@ -52,13 +52,13 @@ class MixinTest extends FactoryTest implements HelperMixin {
     }
 }
 
-describe("createFactory", () => {
+suite("createFactory", () => {
     var clazz: React.ComponentClass<FactoryProps>;
     var factory: React.Factory<FactoryProps>;
     var element: React.ReactElement<FactoryProps>;
     var name = "test";
 
-    beforeEach(() => {
+    suiteSetup(() => {
         clazz = TypedReact.createClass(FactoryTest);
         factory = React.createFactory<FactoryProps>(clazz);
         element = factory({
@@ -66,18 +66,18 @@ describe("createFactory", () => {
         });
     });
 
-    it("should produce a valid element", () => {
+    test("should produce a valid element", () => {
         assert.isTrue(React.isValidElement(element));
         assert.equal(element.props.name, name);
     });
 
-    it("should keep class properties", () => {
+    test("should keep class properties", () => {
         assert.equal(React.renderToStaticMarkup(factory({
             name: "Asana"
         })), "<h1>Greetings, Asana</h1>");
     });
 
-    it("should keep componentWillMount code", () => {
+    test("should keep componentWillMount code", () => {
         var willMountClazz = TypedReact.createClass(ComponentWillMountTest);
         var willMountFactory = React.createFactory(willMountClazz);
         var wasCalled = false;
@@ -90,7 +90,7 @@ describe("createFactory", () => {
         assert.isTrue(wasCalled);
     });
 
-    it("should keep inherited methods and props", () => {
+    test("should keep inherited methods and props", () => {
         var inheritedClazz = TypedReact.createClass(InheritanceTest);
         var inheritedFactory = React.createFactory(inheritedClazz);
         assert.equal(React.renderToStaticMarkup(inheritedFactory({
@@ -98,7 +98,7 @@ describe("createFactory", () => {
         })), "<h1>Greetings, Asana</h1>");
     });
 
-    it("should handle life cycle mixins", () => {
+    test("should handle life cycle mixins", () => {
         var willMountClazz = TypedReact.createClass(ComponentWillMountTest, [
             TypedReact.createMixin(LifeCycleMixin)
         ]);
@@ -113,7 +113,7 @@ describe("createFactory", () => {
         assert.equal(callCount, 2);
     });
 
-    it("should handle normal mixins", () => {
+    test("should handle normal mixins", () => {
         var mixinClazz = TypedReact.createClass(MixinTest, [
             TypedReact.createMixin(HelperMixin)
         ]);
