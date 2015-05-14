@@ -1,4 +1,3 @@
-/// <reference path="../typings/react/react.d.ts"/>
 import extractPrototype = require("./extract_prototype");
 import Component = require("./component");
 import react = require("react");

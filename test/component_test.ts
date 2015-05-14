@@ -4,27 +4,27 @@ import TypedReact = require("../src/index");
 
 var assert = chai.assert;
 
-describe("Component", () => {
+suite("Component", () => {
     var component: TypedReact.Component<any, any>;
 
-    beforeEach(() => {
+    suiteSetup(() => {
         component = new TypedReact.Component<any, any>();
     });
 
-    it("should not have refs", () => {
+    test("should not have refs", () => {
         assert.isUndefined(component.refs);
     });
 
-    it("should not have props", () => {
+    test("should not have props", () => {
         assert.isUndefined(component.props);
     });
 
-    it("should not have state", () => {
+    test("should not have state", () => {
         assert.isUndefined(component.state);
     });
 
     var testNotImplemented = (methodName: string, fn: () => void): void => {
-        it("should throw for " + methodName, () => {
+        test("should throw for " + methodName, () => {
             assert.throws(fn, TypedReact.NotImplementedError, methodName + " should be implemented by React");
         });
     };
@@ -57,7 +57,7 @@ describe("Component", () => {
         component.replaceProps(null);
     });
 
-    it("should return null from render", () => {
+    test("should return null from render", () => {
         assert.isNull(component.render());
     });
 });
