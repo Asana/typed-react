@@ -6,55 +6,19 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "chai/chai.d.ts": {
-      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
-    },
-    "del/del.d.ts": {
-      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
-    },
-    "dts-bundle/dts-bundle.d.ts": {
-      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
-    },
-    "glob/glob.d.ts": {
-      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
-    },
-    "gulp-gh-pages/gulp-gh-pages.d.ts": {
-      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
-    },
-    "gulp-istanbul/gulp-istanbul.d.ts": {
-      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
-    },
-    "gulp-mocha/gulp-mocha.d.ts": {
-      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
-    },
-    "gulp-replace/gulp-replace.d.ts": {
-      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
-    },
-    "gulp-tslint/gulp-tslint.d.ts": {
-      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
-    },
-    "gulp-typescript/gulp-typescript.d.ts": {
-      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
-    },
-    "gulp/gulp.d.ts": {
-      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
-    },
-    "gulp-typedoc/gulp-typedoc.d.ts": {
-      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
-    },
-    "minimatch/minimatch.d.ts": {
-      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+      "commit": "66d8808c98856feae7d5a2d5acfc955110fb126d"
     },
     "mocha/mocha.d.ts": {
-      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+      "commit": "66d8808c98856feae7d5a2d5acfc955110fb126d"
     },
     "node/node.d.ts": {
-      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+      "commit": "66d8808c98856feae7d5a2d5acfc955110fb126d"
     },
     "react/react.d.ts": {
-      "commit": "57340eca1e3aac68d59cc981b441da834ca38235"
+      "commit": "66d8808c98856feae7d5a2d5acfc955110fb126d"
     },
-    "vinyl/vinyl.d.ts": {
-      "commit": "b5131a650f037aa1d962b9ff63a1bb929dc2dcf7"
+    "sinon/sinon.d.ts": {
+      "commit": "66d8808c98856feae7d5a2d5acfc955110fb126d"
     }
   }
 }

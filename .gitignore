@@ -31,12 +31,8 @@ node_modules
 .idea
 *.iml
 
-# Build artifacts
-_build
-doc
-*.js
+# Artifacts
+build
 *.d.ts
-
-# TypeScript Configuration
-tsconfig.json
+*.js
 typings
