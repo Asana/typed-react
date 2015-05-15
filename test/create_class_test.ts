@@ -58,7 +58,7 @@ suite("createFactory", () => {
     var element: React.ReactElement<FactoryProps>;
     var name = "test";
 
-    suiteSetup(() => {
+    setup(() => {
         clazz = TypedReact.createClass(FactoryTest);
         factory = React.createFactory<FactoryProps>(clazz);
         element = factory({
