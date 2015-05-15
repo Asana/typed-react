@@ -7,7 +7,7 @@ var assert = chai.assert;
 suite("Component", () => {
     var component: TypedReact.Component<any, any>;
 
-    suiteSetup(() => {
+    setup(() => {
         component = new TypedReact.Component<any, any>();
     });
 
