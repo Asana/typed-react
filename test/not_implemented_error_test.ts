@@ -8,7 +8,7 @@ suite("NotImplementedError", () => {
     var err: TypedReact.NotImplementedError;
     var methodName = "chai";
 
-    suiteSetup(() => {
+    setup(() => {
         err = new TypedReact.NotImplementedError(methodName);
     });
 
