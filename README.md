@@ -24,16 +24,13 @@ The `npm run` supports the following commands.
 - **precompile** Automatically run before `compile`. Runs `clean`.
 - **compile** Compiles the TypeScript.
 - **coveralls** Sends code coverage information to Coveralls.
-- **prelint** Automatically run before `lint`. Runs `compile` with `sourceMaps` 
-  this is both for `test` and to make sure any custom lint rules will be
-  compiled.
 - **lint** Runs `tslint` on all of the files.
-- **pretest** Automatically run before `test`. Runs `lint` and modifies the
+- **pretest** Automatically run before `test`. Compiles and modifies the
   compiled JavaScript for sourcemap support and coverage.
 - **test** Runs mocha with istanbul code coverage. Set `$MOCHA_REPORTER` to
   override which reporter is used in tests.
 - **posttest** Automatically run after `test`. Checks the code coverage and will
-  fail if the code coverage is not sufficient.
+  fail if the code coverage is not sufficient. Also runs `lint`.
 - **typings** Installs the type definitions.
 
 ## Contributing

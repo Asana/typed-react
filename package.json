@@ -18,11 +18,10 @@
     "precompile": "npm run clean",
     "compile": "find src test typings -name \"*.ts\" | xargs tsc --declaration --module commonjs --target es5 --noImplicitAny --outDir build",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "prelint": "npm run compile -- --sourceMap",
     "lint": "find src test -name \"*.ts\" | sed 's/^/--file=/g' | xargs tslint",
-    "pretest": "npm run lint && find build -type f -name *.js -exec sed -i .bak -e '1s/^var __extends/\\/\\* istanbul ignore next \\*\\/\rvar __extends/; 1s/^/require(\"source-map-support\").install();\r/' {} \\;",
+    "pretest": "npm run compile -- --sourceMap && find build -type f -name *.js -exec sed -i .bak -e '1s/^var __extends/\\/\\* istanbul ignore next \\*\\/\rvar __extends/; 1s/^/require(\"source-map-support\").install();\r/' {} \\;",
     "test": "istanbul cover _mocha -- --reporter ${MOCHA_REPORTER-nyan} --slow 10 --ui tdd --recursive build/**/*_test.js",
-    "posttest": "istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
+    "posttest": "npm run lint && istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "typings": "tsd reinstall && tsd rebundle"
   },
   "repository": {
