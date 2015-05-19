@@ -25,6 +25,8 @@ The `npm run` supports the following commands.
 - **compile** Compiles the TypeScript.
 - **coveralls** Sends code coverage information to Coveralls.
 - **lint** Runs `tslint` on all of the files.
+- **setup** Removes `node_modules` and `typings` and then runs `npm install` and
+  `npm run typings`
 - **pretest** Automatically run before `test`. Compiles and modifies the
   compiled JavaScript for sourcemap support and coverage.
 - **test** Runs mocha with istanbul code coverage. Set `$MOCHA_REPORTER` to
@@ -32,6 +34,7 @@ The `npm run` supports the following commands.
 - **posttest** Automatically run after `test`. Checks the code coverage and will
   fail if the code coverage is not sufficient. Also runs `lint`.
 - **typings** Installs the type definitions.
+- **update** Merges from origin master and then runs `npm run setup`.
 
 ## Contributing
 
