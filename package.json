@@ -18,6 +18,7 @@
     "precompile": "npm run clean",
     "compile": "find src test typings -name \"*.ts\" | xargs tsc --declaration --module commonjs --target es5 --noImplicitAny --outDir build",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "init": "rm -rf node_modules typings && npm install && npm run typings",
     "lint": "find src test -name \"*.ts\" | sed 's/^/--file=/g' | xargs tslint",
     "pretest": "npm run compile -- --sourceMap && find build -type f -name *.js -exec sed -i .bak -e '1s/^var __extends/\\/\\* istanbul ignore next \\*\\/\rvar __extends/; 1s/^/require(\"source-map-support\").install();\r/' {} \\;",
     "test": "istanbul cover _mocha -- --reporter ${MOCHA_REPORTER-nyan} --slow 10 --ui tdd --recursive build/**/*_test.js",
