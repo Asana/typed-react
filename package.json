@@ -13,17 +13,18 @@
   ],
   "scripts": {
     "prebundle": "npm run compile && mv build/src/** .",
-    "bundle": "dts-generator --name $npm_package_name --main index.d.ts --baseDir . --exclude node_modules/dts-generator/node_modules/typescript/bin/lib.es6.d.ts -out ${npm_package_name}.d.ts *.d.ts",
+    "bundle": "dts-generator --name $npm_package_name --main ${npm_package_name}/index.d.ts --baseDir . --exclude node_modules/dts-generator/node_modules/typescript/bin/lib.es6.d.ts -out ${npm_package_name}.d.ts *.d.ts",
     "clean": "rm -rf build coverage *.js *.d.ts",
     "precompile": "npm run clean",
     "compile": "find src test typings -name \"*.ts\" | xargs tsc --declaration --module commonjs --target es5 --noImplicitAny --outDir build",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "prelint": "npm run compile -- --sourceMap",
     "lint": "find src test -name \"*.ts\" | sed 's/^/--file=/g' | xargs tslint",
-    "pretest": "npm run lint && find build -type f -name *.js -exec sed -i .bak -e '1s/^var __extends/\\/\\* istanbul ignore next \\*\\/\rvar __extends/; 1s/^/require(\"source-map-support\").install();\r/' {} \\;",
+    "setup": "rm -rf node_modules typings && npm install && npm run typings",
+    "pretest": "npm run compile -- --sourceMap && find build -type f -name *.js -exec sed -i .bak -e '1s/^var __extends/\\/\\* istanbul ignore next \\*\\/\rvar __extends/; 1s/^/require(\"source-map-support\").install();\r/' {} \\;",
     "test": "istanbul cover _mocha -- --reporter ${MOCHA_REPORTER-nyan} --slow 10 --ui tdd --recursive build/**/*_test.js",
-    "posttest": "istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
-    "typings": "tsd reinstall && tsd rebundle"
+    "posttest": "npm run lint && istanbul check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
+    "typings": "tsd reinstall && tsd rebundle",
+    "update": "git fetch && git merge origin master && npm run setup"
   },
   "repository": {
     "type": "git",
