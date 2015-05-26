@@ -4,9 +4,7 @@
 
 A binding layer between React and TypeScript. React currently uses a `createClass` function which takes in a component specification and then binds the value of `this`. Unfortunately TypeScript does not support that currently but there are several proposals to do that in the future. React moving to a world which supports ES6 classes will also make this unnecessary. In the meantime, this library quite simple provides a class to extend and factory function to convert the prototype for `createClass`.
 
-This library will change dramatically with the release of React 0.13. The goal
-will be to provide traditional React semantics, such as Mixins with the new
-ES6 style classes.
+If using React 0.13 or later, you can just use the [existing type definitions](https://github.com/borisyankov/DefinitelyTyped/tree/master/react) and not use this project.
 
 ## Installation
 
