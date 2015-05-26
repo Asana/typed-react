@@ -2,11 +2,7 @@
 
 [![NPM Version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage][coveralls-image]][coveralls-url]
 
-A binding layer between React and TypeScript. React currently uses a `createClass` function which takes in a component specification and then binds the value of `this`. Unfortunately TypeScript does not support that currently but there are several proposals to do that in the future. React moving to a world which supports ES6 classes will also make this unnecessary. In the meantime, this library quite simple provides a class to extend and factory function to convert the prototype for `createClass`.
-
-This library will change dramatically with the release of React 0.13. The goal
-will be to provide traditional React semantics, such as Mixins with the new
-ES6 style classes.
+A binding layer between React and TypeScript for the `React.createClass` syntax. With React 0.13, you can use ES6 classes to inherit from React components. This works well with TypeScript and you can just use the [type definitions][type-definitions] in DefinitelyTyped. The inheritance path has some different functionality so you may still want to use the `React.createClass` pattern. TypedReact can help you implement that pattern by providing a dummy parent class and a set of functions to appropriately extract the prototype for `React.createClass`
 
 ## Installation
 
@@ -130,3 +126,4 @@ npm test
 [coveralls-url]: https://coveralls.io/r/Asana/typed-react
 [coveralls-image]: https://img.shields.io/coveralls/Asana/typed-react/master.svg?style=flat-square
 
+[type-definitions]: https://github.com/borisyankov/DefinitelyTyped/tree/master/react
