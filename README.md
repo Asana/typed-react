@@ -62,7 +62,7 @@ In this case we export the Props and the Factory but we could make the props and
 
 ## Mixins
 
-TypedReact supports using existing React Mixins as well as defining new mixins with idiomatic TypeScript. The example is based on [http://www.typescriptlang.org/Handbook#mixins](http://www.typescriptlang.org/Handbook#mixins). You need to use `extractPrototype` on your own mixins and should export that from your mixin modules.
+TypedReact supports using existing React Mixins as well as defining new mixins with idiomatic TypeScript. The example is based on [http://www.typescriptlang.org/Handbook#mixins](http://www.typescriptlang.org/Handbook#mixins). You need to use `createMixin` on your own mixins and should export that from your mixin modules.
 
 ```ts
 /// <reference path='../path/to/react.d.ts' />
